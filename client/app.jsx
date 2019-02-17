@@ -1,4 +1,5 @@
 import React from 'react';
+import randomUserAvatar from '../database/seeding.js';
 
 class App extends React.Component {
     render() {

@@ -17,21 +17,11 @@ const descriptionSchema = new mongoose.Schema({
         dropDups: true
     },
     description: String,
-    Categories: [String],
+    categories: [String],
     likes: Number
 });
 
 const Description = mongoose.model('Description', descriptionSchema);
-
-// var description = new Description({
-//     video_id: 1,
-//     description: 'Sups',
-//     Categories: ['food', 'fun'],
-// })
-
-// description.save().then(()=>{
-//     console.log('saved to db')
-// })
 
 const commentSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -48,7 +38,11 @@ const Comment = mongoose.model('Comment', commentSchema);
 
 const userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    username: Number,
+    username:{
+        type: String,
+        unique: true,
+        dropDups: true
+    },
     user_thumbnail: String
 });
 

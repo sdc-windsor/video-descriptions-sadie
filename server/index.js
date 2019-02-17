@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
-const port = 3000 || process.env.PORT;
+const PORT = 8080 || process.env.PORT;
 
 app.use(express.static('./public'));
-//app.get('/', (req, res) => res.send('Hello World!'));
 
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+// app.get('/categories/:video_id', function (req, res) {
+
+// });
+
+app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
