@@ -1,11 +1,11 @@
 const Description = require('./index.js').Description;
 const Comment = require('./index.js').Comment;
 const User = require('./index.js').User;
-const moongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const saveDescription = async function(videoId, description, categories, cb) {
     const instOfDescription = new Description({
-        _id: new moongoose.Types.ObjectId(),
+        _id: new mongoose.Types.ObjectId(),
         video_id: videoId,
         description: description,
         categories: categories,
@@ -19,7 +19,7 @@ const saveDescription = async function(videoId, description, categories, cb) {
 
 const saveUser = async function(userName, userThumbnail, cb) {
     const instOfUser = new User({
-        _id: new moongoose.Types.ObjectId(),
+        _id: new mongoose.Types.ObjectId(),
         username: userName,
         user_thumbnail: userThumbnail
     });
@@ -32,7 +32,7 @@ const saveUser = async function(userName, userThumbnail, cb) {
 
 async function saveComment(videoId, userName, comment, date, cb) {
     const instOfComment = new Comment({
-        _id: new moongoose.Types.ObjectId(),
+        _id: new mongoose.Types.ObjectId(),
         video_id : videoId,
         user_id: await User.findOne({
             username: userName
