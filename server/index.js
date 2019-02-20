@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const PORT = 8080 || process.env.PORT;
 const Description = require('../database/index').Description;
+const PORT = 8080 || process.env.PORT;
 
 app.use(express.static('./public'));
 
@@ -14,16 +14,13 @@ app.get('/categories/:video_id', function (req, res) {
 
 app.get('/videosByCategory/:category', function (req, res) {
     // console.log(req.params.category)
-    Description.find(
-            {
-                categories: {
-                    $in:  [req.params.category]
-                }
-            }
-        ).then((data)=>{
-        res.json(data);
-        res.end();
-    })
+    Description.find({categories: {$in: [req.params.category]}})
+               .then((data)=>{
+                    res.json(data);
+                    res.end();
+                });
 });
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
+
+module.exports = app;
