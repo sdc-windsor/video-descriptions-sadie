@@ -23,7 +23,10 @@ const randomInd = function () {
 const generateCategories = function () {
     var cat = [];
     for (let len = 0; len < randomLength(); len++) {
-        cat.push(categories[randomInd()]);
+        const randomIndex = randomInd();
+        if(cat.indexOf(categories[randomIndex])<0) {
+            cat.push(categories[randomIndex]);
+        }
     }
     return cat;
 }

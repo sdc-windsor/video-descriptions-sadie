@@ -1,25 +1,37 @@
-const axios = require('axios');
-
-
+//const axios = require('axios');
+const request = require('supertest');
+const server = require('../server');
 
 describe('Server should provide the correct endpoints', ()=>{
-    let server ;
-    beforeEach(()=>{
-        server = require('../server');
-    });
 
-    // afterEach(()=>{
-    //     server.close();
-    // })
+    test('Should response with correct categories for the selected videos',async(done)=>{
+        expect.assertions(4);
+        await request(server).get('/categories/10').then((response)=>{
+            expect(response.body.categories).toEqual(["Education","Travel","Journalism","Animation"]);
+            expect(response.body.video_id).toBe(10);
+        })
+        await request(server).get('/categories/1').then((response)=>{
+            expect(response.body.categories).toEqual(["Journalism","Music"]);
+            expect(response.body.video_id).toBe(1);
+        })
+        done();
+    })
 
+    test('Should response with correct data for the used videos',(done)=>{
+        expect.assertions(2);
+        request(server).get('/videosByCategory/food%2Ccomedy').then((response)=>{
+            expect(response.body[0].categories).toEqual(["Comedy","Food","Education","Fashion"]);
+            expect(response.body[0].video_id).toBe(5);
+            done();
+        })
+    })
 
-    test('Should send back correct data for the used endpoints', async()=>{
-        expect.assertions(1);
-        await axios.get('http://localhost:8080/categories/10')
-             .then((data)=>{
-                console.log(data.data.video_id);
-                 expect(data.data.video_id).toEqual(10);
-             })
-
+    test('Should accept multiple categories as an array of parameter',(done)=>{
+        expect.assertions(2);
+        request(server).get('/videosByCategory/food%2CTravel').then((response)=>{
+            expect(response.body[0].categories).toEqual(["Documentary","Food","Animation","Travel","Art & Design"]);
+            expect(response.body[0].video_id).toBe(4);
+            done();
+        })
     })
 })
