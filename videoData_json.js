@@ -5,7 +5,7 @@ module.exports = [
     "thumbnail": "https://i.vimeocdn.com/video/435992078_130x73.jpg",
     "title": "Katheryn Avenue",
     "author": "Alberta59",
-    "plays": "12679"
+    "plays": "12679000"
   },
   {
     "video_id": "2",

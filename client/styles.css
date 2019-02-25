@@ -1,0 +1,11 @@
+.userThumbNail{
+    border-radius: '50%';
+    height: '2em';
+    width: '2em';
+    display: 'inline';
+    padding: "20px 10px";
+    border-radius: '50%';
+    height: '2em';
+    width: '2em';
+    display: 'inline';
+}

@@ -15,7 +15,7 @@
   a. For Videos By Catergories endpoint, in order to put more than 1 categories for query search,     please use '%2C' between params when writing your url.
      For example: in order to search for videos with categories of "Animation" and "Food", you can write it as following:
 
-     http://localhost:8080/videosByCategory/Animation%2CFood
+     http://localhost:8080/videosByCategory/animation%2Cfood
 
 
 
