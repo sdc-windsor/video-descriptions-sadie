@@ -4,20 +4,39 @@ import descriptions from '../videoData_json';
 import Title from './components/Title.jsx';
 import axios from 'axios';
 import IconTab from './components/IconTab.jsx';
-
-
+import LineDivider from './components/LineDivider.jsx';
+import DetailCom from './components/DetailCom.jsx';
+import CommentsList from './components/CommentsList.jsx';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             authorImg: '',
+            details: '',
+            categories: []
         }
         this.getAuthorImg = this.getAuthorImg.bind(this);
     }
 
     getAuthorImg(name,cb) {
-        axios.get(`http://localhost:8080/usersthumbnail/${name}`).then((data)=>{cb(data)});
+        axios.get(`http://localhost:8081/usersthumbnail/${name}`).then((data)=>{cb(data)});
+    }
+
+    getDetail(video_id) {
+        axios.get(`http://localhost:8081/details/${video_id}`).then((data)=>{
+            this.setState({
+                details: data.data[0].description
+            });
+        });
+    }
+
+    getCategories(video_id) {
+        axios.get(`http://localhost:8081/categories/${video_id}`).then((data)=>{
+            this.setState({
+                categories: data.data.categories
+            });
+        });
     }
 
     componentDidMount() {
@@ -26,15 +45,24 @@ class App extends React.Component {
                 authorImg: data.data.user_thumbnail
             })
         });
+        this.getDetail(2);
+        this.getCategories(2);
     }
 
     render() {
         return (
-            <div>
+            <div style={{width: '66%', paddingRight: '2.5rem', paddingLeft: '2.5rem', paddingTop: '2.5rem'}}>
                 <Title data={descriptions[0]}
                        authorImg={this.state.authorImg}
                 />
+                <LineDivider />
                 <IconTab data={descriptions[0]}/>
+                <DetailCom data={this.state.details} style={{paddingTop: '2.5rem'}}
+                           categories={this.state.categories}
+                />
+                &nbsp;
+                <LineDivider />
+                <CommentsList />
             </div>
         )
     }

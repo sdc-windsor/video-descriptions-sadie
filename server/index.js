@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const Description = require('../database/index').Description;
 const User = require('../database/index').User;
+const Comment = require('../database/index').Comment;
 // const PORT = 8080 || process.env.PORT;
 
 app.use(express.static('./public'));
@@ -38,6 +39,20 @@ app.get('/videosByCategory/:category', function (req, res) {
                     res.json(data);
                     res.end();
                 });
+});
+
+app.get('/comments/:video_id', function (req, res) {
+    Comment.find({video_id: req.params.video_id}).sort({data:-1}).exec().then((data)=>{
+        res.json(data);
+        res.end();
+    })
+});
+
+app.get('/details/:video_id', function (req, res) {
+    Description.find({video_id: req.params.video_id}).then((data)=>{
+        res.json(data);
+        res.end();
+    })
 });
 
 module.exports = app;

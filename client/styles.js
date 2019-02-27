@@ -17,6 +17,22 @@ module.exports = {
         maxWidth: '44rem',
     },
 
+    details: {
+        // ariaLabel: PropTypes.string,
+        // className: PropTypes.string,
+        // role: PropTypes.string,
+        // size: PropTypes.string,
+        // vertical: PropTypes.bool,
+        width: '4em',
+        opacity: "0"
+    },
+
+    buttonDivider: {
+        width:'5px',
+        height:'auto',
+        display:'inline-block'
+    },
+
     userInfo: {
         maxWidth: '600px',
         maxHeight: '39px'

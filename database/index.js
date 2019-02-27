@@ -29,7 +29,7 @@ const commentSchema = new mongoose.Schema({
         ref: 'User'
     },
     comment: String,
-    date: String
+    date: Date
 });
 
 const Comment = mongoose.model('Comment', commentSchema);
