@@ -40,7 +40,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.getAuthorImg(descriptions[0].author,(data)=>{
+        this.getAuthorImg('5c765bac17026a2044555c3e',(data)=>{
             this.setState({
                 authorImg: data.data.user_thumbnail
             })

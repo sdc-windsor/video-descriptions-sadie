@@ -14,8 +14,8 @@ app.get('/categories/:video_id', function (req, res) {
     })
 });
 
-app.get('/usersthumbnail/:name', function (req, res) {
-    User.findOne({username: req.params.name}).then((data)=>{
+app.get('/usersthumbnail/:user_id', function (req, res) {
+    User.findOne({_id: req.params.user_id}).then((data)=>{
         res.json(data);
         res.end();
     })

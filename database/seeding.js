@@ -63,10 +63,9 @@ async function logComment() {
         for (let j = 0; j < 10; j++) {
             const randomComment = await faker.lorem.sentences();
             const randomDate = await faker.date.past();
-            const user_id = await User.findOne({username: videoData[i - 1].author});
-            console.log(user_id);
+            const user_id = await User.findOne({username: videoData[j].author});
             await saveComment(i, user_id._id, randomComment, randomDate, () => {
-                console.log(videoData[i - 1].author);
+                console.log(videoData[j].author);
                 console.log(i,j)
             })
         }
