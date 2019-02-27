@@ -34,9 +34,7 @@ async function saveComment(videoId, userName, comment, date, cb) {
     const instOfComment = new Comment({
         _id: new mongoose.Types.ObjectId(),
         video_id : videoId,
-        user_id: await User.findOne({
-            username: userName
-        })._id,
+        user_id: userName,
         comment: comment,
         date: date
     });

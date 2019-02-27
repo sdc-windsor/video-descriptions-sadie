@@ -51,17 +51,18 @@ class App extends React.Component {
 
     render() {
         return (
-            <div style={{width: '66%', paddingRight: '2.5rem', paddingLeft: '2.5rem', paddingTop: '2.5rem'}}>
+            <div style={{width: '65%', paddingRight: '2.5rem', paddingLeft: '2.5rem', paddingTop: '2.5rem'}}>
                 <Title data={descriptions[0]}
                        authorImg={this.state.authorImg}
                 />
                 <LineDivider />
                 <IconTab data={descriptions[0]}/>
-                <DetailCom data={this.state.details} style={{paddingTop: '2.5rem'}}
+                <DetailCom data={this.state.details}
                            categories={this.state.categories}
                 />
                 &nbsp;
                 <LineDivider />
+                &nbsp;
                 <CommentsList />
             </div>
         )

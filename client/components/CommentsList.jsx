@@ -6,7 +6,7 @@ export default class CommentsList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            comments: [],
+            userInfo: [],
             newDisplay: [],
             currentInd:0,
             numOfChildren: 5,
@@ -15,41 +15,44 @@ export default class CommentsList extends React.Component {
 
     getComments(video_id) {
         axios.get(`http://localhost:8081/comments/${video_id}`).then((data)=>{
-            if (data.data.length > this.state.comments.length) {
+            console.log(data.data)
+            // if (data.data.length > this.state.comments.length) {
                 this.setState({
-                    comments: data.data.map((ele)=>{
-                        return ele.comment
+                    userInfo: data.data.map((ele)=>{
+                        return ele
                     })
                 })
-            }
+            // }
+
         })
     }
 
-    commentToShow(currentIndex, nextWave) {
-        console.log('currentIndex', currentIndex, nextWave);
-        let com = this.state.comments.slice(currentIndex, nextWave);
-        console.log(com);
-        this.setState({
-            newDisplay: com,
-            currentInd: currentIndex+=5,
-            numOfChildren: this.state.numOfChildren+=5
-        })
-        console.log(this.state.newDisplay)
-    }
+    // commentToShow(currentIndex, nextWave) {
+    //     console.log('currentIndex', currentIndex, nextWave);
+    //     let com = this.state.comments.slice(currentIndex, nextWave);
+    //     console.log(com);
+    //     this.setState({
+    //         newDisplay: com,
+    //         currentInd: currentIndex+=5,
+    //         numOfChildren: this.state.numOfChildren+=5
+    //     })
+    //     console.log(this.state.newDisplay)
+    // }
 
     componentDidMount() {
         this.getComments(2);
+        console.log('state', this.state.userInfo)
     }
 
     render() {
         const children = [];
-        for (let i = 0; i < this.state.numOfChildren; i++) {
-            children.push(<Comment key={i} comment={this.state.comments}/>)
+        for (let i = 0; i < this.state.userInfo; i++) {
+            children.push(<Comment key={i} userInfo={this.state.userInfo[i]}/>)
         }
 
         return (
             <div>
-                <button onClick={()=>{this.commentToShow(this.state.currentInd,this.state.currentInd+5)}}>Show more</button>
+                {/* <button onClick={()=>{this.commentToShow(this.state.currentInd,this.state.currentInd+5)}}>Show more</button> */}
                 {/* <h3>{
                     this.state.comments.map((data,index=0)=>(
                         <div key={index+=1} style={{borderColor:"black", borderStyle: 'solid'}}>
@@ -58,7 +61,9 @@ export default class CommentsList extends React.Component {
                     ))
                 }</h3> */}
                 {
-                    children
+                    this.state.userInfo.map((ele,i)=>{
+                        return <Comment key={i} userInfo={ele} />
+                    })
                 }
             </div>
         )

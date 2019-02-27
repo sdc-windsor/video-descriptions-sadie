@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'reactstrap';
 
 const DetailCom = (props) => (
-    <div style={{float: 'left'}}>
+    <div style={{float: 'left', marginTop: '2rem', marginBottom:'2em'}}>
         {props.data}
         &nbsp;
         <h3>{props.categories.length + " Categories"}</h3>
