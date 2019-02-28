@@ -7,13 +7,13 @@ var faker = require('faker');
 // const User = require('./index.js').User;
 const mongoose = require('mongoose');
 const differenceInTime = require('date-fns').distanceInWordsStrict;
-var date = Comment.findOne({video_id: 1}).exec()
-    .then(data=>{
-        console.log(differenceInTime(new Date(),
-        data.date,
-        {addSuffix: true}))
-    })
-var result = differenceInTime(date.date);
+// var date = Comment.findOne({video_id: 1}).exec()
+//     .then(data=>{
+//         console.log(differenceInTime(new Date(),
+//         data.date,
+//         {addSuffix: true}))
+//     })
+// var result = differenceInTime(date.date);
 
 // async function saveComment(videoId, userName, comment, date, cb) {
 //     const instOfComment = new Comment({
@@ -48,4 +48,4 @@ var result = differenceInTime(date.date);
 
 // logComment();
 
-// Comment.find({ video_id: 2 }).sort({date: -1}).limit(10).exec().then(data=>{console.log(data.length)})
+Comment.find({ video_id: 2 }).sort({date: -1}).limit(10).exec().then(data=>{console.log(data)})

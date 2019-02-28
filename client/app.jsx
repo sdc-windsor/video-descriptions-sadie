@@ -7,6 +7,7 @@ import IconTab from './components/IconTab.jsx';
 import LineDivider from './components/LineDivider.jsx';
 import DetailCom from './components/DetailCom.jsx';
 import CommentsList from './components/CommentsList.jsx';
+import AddComment from "./components/AddComment.jsx";
 
 class App extends React.Component {
     constructor(props) {
@@ -64,6 +65,7 @@ class App extends React.Component {
                 <LineDivider />
                 &nbsp;
                 <CommentsList />
+                {/* <AddComment data={descriptions[0]}/> */}
             </div>
         )
     }
