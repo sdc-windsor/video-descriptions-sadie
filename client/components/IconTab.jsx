@@ -89,7 +89,7 @@ class IconTab extends React.Component {
     }
 
     getNumOfComments(video_id) {
-        axios.get(`http://localhost:8081/comments/${video_id}`).then((data)=>{
+        axios.get(`http://localhost:8081/comments/${video_id}`).then((data) => {
             this.setState({
                 numOfComments: data.data.length
             })
@@ -111,30 +111,34 @@ class IconTab extends React.Component {
 
     render() {
         return (
-            <div style={{float: 'left'}}>
-                <Button style={{backgroundColor:'white', borderColor:'white', width: '10em'}}>
-                    <TiMediaPlayOutline style={{color: 'black', width:'2em', height:'2em'}}/>
-                    <div style={{display:'inline', color: 'black'}}>{this.shortenNum(this.props.data.plays)}</div>
-                </Button>
-                &nbsp;
-                <Button style={{backgroundColor:'white', borderColor:'white', width: '10em'}}>
-                    <TiHeartOutline style={{color: 'black', width:'1.75em', height:'2em'}}/>
-                    <div style={{display:'inline', color: 'black'}}>{" "+this.shortenNum(this.props.data.plays)}</div>
-                </Button>
-                &nbsp;
-                <Button style={{backgroundColor:'white', borderColor:'white', width: '10em'}}>
-                    <IoSocialBufferOutline style={{color: 'black', width:'1.75em', height:'2em'}}/>
-                    <div style={{display:'inline', color: 'black'}}>{" "+this.state.numOfCollection}</div>
-                </Button>
-                &nbsp;
-                <Button style={{backgroundColor:'white', borderColor:'white', width: '10em'}}>
-                    <MdChatBubbleOutline style={{color: 'black', width:'1.75em', height:'2em'}}/>
-                    <div style={{display:'inline', color: 'black'}}>{" "+this.state.numOfComments}</div>
-                </Button>
-                <Button style={{backgroundColor:'rgb(238, 241, 242)', borderColor:'white', width: '7em', float:'right'}}>
-                    <IoIosPaperplaneOutline style={{color: 'black', width:'1.75em', height:'2em'}}/>
-                    <div style={{display:'inline', color: 'black'}}>{" Share"}</div>
-                </Button>
+            <div style={{ float: 'left' }}>
+                <div style={{ float: 'left' }}>
+                    <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
+                        <TiMediaPlayOutline style={{ color: 'black', width: '2em', height: '2em' }} />
+                        <div style={{ display: 'inline', color: 'black' }}>{this.shortenNum(this.props.data.plays)}</div>
+                    </Button>
+                    &nbsp;
+                    <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
+                        <TiHeartOutline style={{ color: 'black', width: '1.75em', height: '2em' }} />
+                        <div style={{ display: 'inline', color: 'black' }}>{" " + this.shortenNum(this.props.data.plays)}</div>
+                    </Button>
+                    &nbsp;
+                    <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
+                        <IoSocialBufferOutline style={{ color: 'black', width: '1.75em', height: '2em' }} />
+                        <div style={{ display: 'inline', color: 'black' }}>{" " + this.state.numOfCollection}</div>
+                    </Button>
+                    &nbsp;
+                    <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
+                        <MdChatBubbleOutline style={{ color: 'black', width: '1.75em', height: '2em' }} />
+                        <div style={{ display: 'inline', color: 'black' }}>{" " + this.state.numOfComments}</div>
+                    </Button>
+                </div>
+                <div style={{float: 'right' }}>
+                    <Button style={{ backgroundColor: 'rgb(238, 241, 242)', borderColor: 'white', width: '7em' }}>
+                        <IoIosPaperplaneOutline style={{ color: 'black', width: '1.75em', height: '2em' }} />
+                        <div style={{ display: 'inline', color: 'black' }}>{" Share"}</div>
+                    </Button>
+                </div>
             </div>
         )
     }

@@ -5,7 +5,7 @@ const LineDivider = () => (
         style={{
             color: 'black',
             backgroundColor: 'black',
-            height: '5',
+            height: '2',
             marginTop: "2em",
             margingBottom: "2em",
         }}

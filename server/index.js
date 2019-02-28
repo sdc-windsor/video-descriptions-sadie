@@ -3,8 +3,10 @@ const app = express();
 const Description = require('../database/index').Description;
 const User = require('../database/index').User;
 const Comment = require('../database/index').Comment;
+const saveComment = require('../database/helper').saveComment;
+const bodyParser = require('body-parser');
 // const PORT = 8080 || process.env.PORT;
-
+app.use(bodyParser.json());
 app.use(express.static('./public'));
 
 app.get('/categories/:video_id', function (req, res) {
@@ -14,8 +16,8 @@ app.get('/categories/:video_id', function (req, res) {
     })
 });
 
-app.get('/usersthumbnail/:name', function (req, res) {
-    User.findOne({username: req.params.name}).then((data)=>{
+app.get('/usersthumbnail/:user_id', function (req, res) {
+    User.findOne({_id: req.params.user_id}).then((data)=>{
         res.json(data);
         res.end();
     })
@@ -51,6 +53,14 @@ app.get('/comments/:video_id', function (req, res) {
 app.get('/details/:video_id', function (req, res) {
     Description.find({video_id: req.params.video_id}).then((data)=>{
         res.json(data);
+        res.end();
+    })
+});
+
+app.post('/comments/:video_id', function (req, res) {
+    saveComment(req.body.video_id, req.body.user_id, req.body.comment, req.body.date, ()=>{
+        console.log('Saved comment to database')
+        res.send('Saved comment to database');
         res.end();
     })
 });
