@@ -52,7 +52,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div style={{width: '65%', paddingRight: '2.5rem', paddingLeft: '2.5rem', paddingTop: '2.5rem'}}>
+            <div style={{paddingLeft: '2.5rem', paddingTop: '2.5rem', float: 'left'}}>
                 <Title data={descriptions[0]}
                        authorImg={this.state.authorImg}
                 />

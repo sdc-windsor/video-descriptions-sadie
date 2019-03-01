@@ -4,10 +4,8 @@ const LineDivider = () => (
     <hr
         style={{
             color: 'black',
-            backgroundColor: 'black',
-            height: '2',
+            height: '5px',
             marginTop: "2em",
-            margingBottom: "2em",
         }}
     />
 );
