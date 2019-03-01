@@ -111,7 +111,7 @@ class IconTab extends React.Component {
 
     render() {
         return (
-            <div style={{ float: 'left' }}>
+            <div style={{paddingRight: '2%'}}>
                 <div style={{ float: 'left' }}>
                     <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
                         <TiMediaPlayOutline style={{ color: 'black', width: '2em', height: '2em' }} />
