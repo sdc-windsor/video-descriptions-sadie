@@ -21,11 +21,14 @@ class App extends React.Component {
     }
 
     getAuthorImg(name,cb) {
-        axios.get(`http://localhost:8081/usersthumbnail/${name}`).then((data)=>{cb(data)});
+        axios.get(`http://localhost:4003/userid/${name}`).then((data)=>{
+            axios.get(`http://localhost:4003/usersthumbnail/${data.data}`).then((data)=>{cb(data)})
+        })
     }
 
     getDetail(video_id) {
-        axios.get(`http://localhost:8081/details/${video_id}`).then((data)=>{
+        axios.get(`http://localhost:4003/details/${video_id}`).then((data)=>{
+            console.log("service data", data)
             this.setState({
                 details: data.data[0].description
             });
@@ -33,21 +36,25 @@ class App extends React.Component {
     }
 
     getCategories(video_id) {
-        axios.get(`http://localhost:8081/categories/${video_id}`).then((data)=>{
+        axios.get(`http://localhost:4003/categories/${video_id}`).then((data)=>{
             this.setState({
                 categories: data.data.categories
             });
-        });
+        }).catch((err)=>{console.log(err)});
     }
 
     componentDidMount() {
-        this.getAuthorImg('5c765bac17026a2044555c3e',(data)=>{
-            this.setState({
-                authorImg: data.data.user_thumbnail
-            })
-        });
-        this.getDetail(2);
-        this.getCategories(2);
+        let id = window.location.pathname;
+        id = id.split('/');
+        axios.get(`http://localhost:4003/videos/${Number(id[1])}`).then((data)=>{
+            this.getAuthorImg(data.data.author,(data)=>{
+                this.setState({
+                    authorImg: data.data.user_thumbnail
+                })
+            });
+        })
+        this.getDetail(Number(id[1]));
+        this.getCategories(Number(id[1]));
     }
 
     render() {

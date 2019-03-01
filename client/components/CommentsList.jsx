@@ -20,13 +20,12 @@ export default class CommentsList extends React.Component {
     }
 
     getComments(video_id) {
-        axios.get(`http://localhost:8081/comments/${video_id}`).then((data)=>{
-            console.log(data.data)
-                this.setState({
-                    userInfo: data.data.map((ele)=>{
-                        return ele
-                    })
+        axios.get(`http://localhost:4003/comments/${video_id}`).then((data)=>{
+            this.setState({
+                userInfo: data.data.map((ele)=>{
+                    return ele
                 })
+            })
         })
     }
 
@@ -41,12 +40,15 @@ export default class CommentsList extends React.Component {
             }
         }
 
-        axios.post(`http://localhost:8081/comments/${video_id}`, data).then(()=>{
+        axios.post(`http://localhost:4003/comments/${video_id}`, data).then(()=>{
             console.log('posted')
+            let id = window.location.pathname;
+            id = id.split('/');
+            console.log('Inside client',Number(id[1]));
             this.setState({
                 commentToSend: 'Comment'
             });
-            this.getComments(2);
+            this.getComments(Number(id[1]));
         })
     }
 
@@ -57,13 +59,14 @@ export default class CommentsList extends React.Component {
     }
 
     componentDidMount() {
-        this.getComments(2);
-        console.log('state', this.state.userInfo)
+        let id = window.location.pathname;
+        id = id.split('/');
+        this.getComments(Number(id[1]));
     }
 
     render() {
         return (
-            <div>
+            <div style={{marginTop:'2em'}}>
                 {
                     this.state.userInfo.map((ele,i)=>{
                         return <Comment key={i} userInfo={ele} />
