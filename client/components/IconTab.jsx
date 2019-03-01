@@ -89,24 +89,17 @@ class IconTab extends React.Component {
     }
 
     getNumOfComments(video_id) {
-        axios.get(`http://localhost:8081/comments/${video_id}`).then((data) => {
+        axios.get(`http://localhost:4003/comments/${video_id}`).then((data) => {
             this.setState({
                 numOfComments: data.data.length
             })
         })
     }
 
-    // getNumOfCollections(video_id) {
-    //     axios.get(`http://localhost:8080/collections/${video_id}`).then((data)=>{
-    //         this.setState({
-    //             numOfComments: data.data.length
-    //         })
-    //     })
-    // }
-
     componentWillMount() {
-        this.getNumOfComments(10);
-        // this.getNumOfCollections(10)
+        let id = window.location.pathname;
+        id = id.split('/');
+        this.getNumOfComments(Number(id[1]));
     }
 
     render() {
