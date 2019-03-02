@@ -67,7 +67,7 @@ export default class CommentsList extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{marginTop:'2em'}}>
                 {
                     this.state.userInfo.map((ele,i)=>{
                         return <Comment key={i} userInfo={ele} />

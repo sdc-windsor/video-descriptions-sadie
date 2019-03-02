@@ -75,7 +75,6 @@ class App extends React.Component {
                 <LineDivider />
                 &nbsp;
                 <CommentsList />
-                <AddComment data={descriptions[0]}/>
             </div>
         )
     }

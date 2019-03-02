@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'reactstrap';
 
 const DetailCom = (props) => (
-    <div style={{float: 'left', marginTop: '2rem', marginBottom:'2em'}}>
+    <div style={{float: 'left', marginTop: '2rem', marginBottom:'2em',border:'2em'}}>
         {props.data}
         &nbsp;
         {console.log(props.categories)}

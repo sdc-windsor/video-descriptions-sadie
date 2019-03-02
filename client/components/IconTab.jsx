@@ -92,7 +92,6 @@ class IconTab extends React.Component {
 
     getNumOfComments(video_id) {
         axios.get(`http://localhost:4003/comments/${video_id}`).then((data) => {
-            console.log('num of comments', data.data)
             this.setState({
                 numOfComments: data.data.length
             })
@@ -101,7 +100,6 @@ class IconTab extends React.Component {
 
     getNumOfLikes(video_id) {
         axios.get(`http://localhost:4003/categories/${video_id}`).then((data) => {
-            console.log('num of likes' , data.data)
             this.setState({
                 numOfLikes: data.data.likes
             })
