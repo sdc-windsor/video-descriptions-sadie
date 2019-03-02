@@ -16,12 +16,14 @@ class IconTab extends React.Component {
         this.state = {
             hover: false,
             numOfComments: 0,
-            numOfCollection: 0
+            numOfCollection: 0,
+            numOfLikes: 0
         }
     }
 
     shortenNum(num) {
-        const stringifiedNum = num;
+        const stringifiedNum = typeof num === 'string' ? num : JSON.stringify(num);
+        console.log(stringifiedNum)
         if (stringifiedNum.length >= 7 && stringifiedNum.length < 10) {
             const milDigit = stringifiedNum.slice(0, stringifiedNum.length - 4);
             return this.convertMilToString(stringifiedNum, milDigit);
@@ -89,38 +91,49 @@ class IconTab extends React.Component {
     }
 
     getNumOfComments(video_id) {
-        axios.get(`http://localhost:8081/comments/${video_id}`).then((data) => {
+        axios.get(`http://localhost:4003/comments/${video_id}`).then((data) => {
+            console.log('num of comments', data.data)
             this.setState({
                 numOfComments: data.data.length
             })
         })
     }
 
-    // getNumOfCollections(video_id) {
-    //     axios.get(`http://localhost:8080/collections/${video_id}`).then((data)=>{
-    //         this.setState({
-    //             numOfComments: data.data.length
-    //         })
-    //     })
-    // }
+    getNumOfLikes(video_id) {
+        axios.get(`http://localhost:4003/categories/${video_id}`).then((data) => {
+            console.log('num of likes' , data.data)
+            this.setState({
+                numOfLikes: data.data.likes
+            })
+        })
+    }
 
-    componentWillMount() {
-        this.getNumOfComments(10);
-        // this.getNumOfCollections(10)
+    componentDidMount() {
+        let id = window.location.pathname;
+        id = id.split('/');
+        this.getNumOfComments(Number(id[1]));
+        this.getNumOfLikes(Number(id[1]));
+        console.log(this.state.numOfLikes, this.state.numOfComments)
     }
 
     render() {
         return (
-            <div style={{ float: 'left' }}>
+            <div style={{ paddingRight: '2%'}}>
                 <div style={{ float: 'left' }}>
                     <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
                         <TiMediaPlayOutline style={{ color: 'black', width: '2em', height: '2em' }} />
-                        <div style={{ display: 'inline', color: 'black' }}>{this.shortenNum(this.props.data.plays)}</div>
+                        <div style={{ display: 'inline', color: 'black' }}>{
+                                this.props.data.plays===undefined ?
+                                    this.shortenNum(10000000)
+                                    :this.shortenNum(this.props.data.plays)
+                            }</div>
                     </Button>
                     &nbsp;
                     <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
                         <TiHeartOutline style={{ color: 'black', width: '1.75em', height: '2em' }} />
-                        <div style={{ display: 'inline', color: 'black' }}>{" " + this.shortenNum(this.props.data.plays)}</div>
+                        <div style={{ display: 'inline', color: 'black' }}>{" " + this.state.numOfLikes===undefined ?
+                                    this.shortenNum(10000000)
+                                    :this.shortenNum(this.state.numOfLikes)}</div>
                     </Button>
                     &nbsp;
                     <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>

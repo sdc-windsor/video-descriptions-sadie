@@ -23,8 +23,14 @@ app.get('/usersthumbnail/:user_id', function (req, res) {
     })
 });
 
+app.get('/userid/:username', function(req,res){
+    User.findOne({username: req.params.username}).then((data)=>{
+        res.json(data._id);
+        res.end();
+    })
+})
+
 app.get('/videosByCategory/:category', function (req, res) {
-    console.log(req.params.category)
     const arrayOfCategories = [];
     const splitParams = req.params.category.split(',');
     for (let l = 0 ; l< splitParams.length;l++) {
@@ -58,6 +64,7 @@ app.get('/details/:video_id', function (req, res) {
 });
 
 app.post('/comments/:video_id', function (req, res) {
+    console.log(req)
     saveComment(req.body.video_id, req.body.user_id, req.body.comment, req.body.date, ()=>{
         console.log('Saved comment to database')
         res.send('Saved comment to database');

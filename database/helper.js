@@ -3,12 +3,13 @@ const Comment = require('./index.js').Comment;
 const User = require('./index.js').User;
 const mongoose = require('mongoose');
 
-const saveDescription = async function(videoId, description, categories, cb) {
+const saveDescription = async function(videoId, description, categories, likes, cb) {
     const instOfDescription = new Description({
         _id: new mongoose.Types.ObjectId(),
         video_id: videoId,
         description: description,
         categories: categories,
+        likes: likes
     });
     await instOfDescription.save().then((data)=>{
         cb(data);

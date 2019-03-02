@@ -14,6 +14,10 @@ const randomLength = function () {
     return (Math.floor(Math.random() * Math.floor(categories.length))) + 1;
 }
 
+const randomLikes = function() {
+    return (Math.floor(Math.random() * Math.floor(100000000))) + 1;
+}
+
 //function that generate a random index of categories array
 const randomInd = function () {
     return (Math.floor(Math.random() * Math.floor(categories.length)));
@@ -49,7 +53,7 @@ logUser();
 async function logDescription() {
     for (let i = 1; i < 101; i ++) {
         const randomDescription = await faker.lorem.paragraph();
-        await saveDescription( i, randomDescription, generateCategories(),function(){
+        await saveDescription( i, randomDescription, generateCategories(), randomLikes(),function(){
             console.log(`description ${i} has been saved!`)
         })
     }
@@ -64,6 +68,7 @@ async function logComment() {
             const randomComment = await faker.lorem.sentences();
             const randomDate = await faker.date.past();
             const user_id = await User.findOne({username: videoData[j].author});
+            console.log(user_id._id);
             await saveComment(i, user_id._id, randomComment, randomDate, () => {
                 console.log(videoData[j].author);
                 console.log(i,j)

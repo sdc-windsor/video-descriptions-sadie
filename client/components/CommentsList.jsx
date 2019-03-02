@@ -16,24 +16,24 @@ export default class CommentsList extends React.Component {
             commentToSend: 'Comment'
         }
         this.sendComment = this.sendComment.bind(this);
+        this.getComments = this.getComments.bind(this);
         this.updateInput = this.updateInput.bind(this);
     }
 
     getComments(video_id) {
-        axios.get(`http://localhost:8081/comments/${video_id}`).then((data)=>{
-            console.log(data.data)
-                this.setState({
-                    userInfo: data.data.map((ele)=>{
-                        return ele
-                    })
+        axios.get(`http://localhost:4003/comments/${video_id}`).then((data)=>{
+            this.setState({
+                userInfo: data.data.map((ele)=>{
+                    return ele
                 })
+            })
         })
     }
 
     sendComment(video_id){
         let data = {
             video_id: video_id,
-            user_id: '5c765bac17026a2044555c38',
+            user_id: '5c7a0ea22c39cb7e8eabd67b',
             comment: this.state.commentToSend,
             date: new Date(),
             func: () => {
@@ -41,12 +41,15 @@ export default class CommentsList extends React.Component {
             }
         }
 
-        axios.post(`http://localhost:8081/comments/${video_id}`, data).then(()=>{
+        axios.post(`http://localhost:4003/comments/${video_id}`, data).then(()=>{
             console.log('posted')
+            let id = window.location.pathname;
+            id = id.split('/');
+            console.log('Inside client',Number(id[1]));
             this.setState({
                 commentToSend: 'Comment'
             });
-            this.getComments(2);
+            this.getComments(Number(id[1]));
         })
     }
 
@@ -57,8 +60,9 @@ export default class CommentsList extends React.Component {
     }
 
     componentDidMount() {
-        this.getComments(2);
-        console.log('state', this.state.userInfo)
+        let id = window.location.pathname;
+        id = id.split('/');
+        this.getComments(Number(id[1]));
     }
 
     render() {

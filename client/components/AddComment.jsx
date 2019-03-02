@@ -13,8 +13,7 @@ class AddComment extends React.Component{
     }
 
     getUserInfo(user_id) {
-        axios.get(`http://localhost:8081/usersthumbnail/${user_id}`).then((data)=>{
-            console.log(data);
+        axios.get(`http://localhost:4003/usersthumbnail/${user_id}`).then((data)=>{
             this.setState({
                 info: data.data
             })
@@ -22,8 +21,7 @@ class AddComment extends React.Component{
     }
 
     componentDidMount() {
-        this.getUserInfo('5c765bac17026a2044555c38');
-        // this.getTimeDifference(this.props.userInfo.date)
+        this.getUserInfo('5c7a0ea22c39cb7e8eabd67b');
     }
 
     render() {
@@ -36,7 +34,11 @@ class AddComment extends React.Component{
                     <div>Add a new Comment</div>
                     <textarea style={{width: '100%', height:'5em'}} value={this.props.comment} onChange={(event)=>{this.props.updateInput(event.target.value)}}></textarea>
                     <div><Button color="info" style={{padding: "5px"}}
-                                 onClick={()=>{ this.props.sendComment(2) }}
+                                 onClick={()=>{
+                                    let id = window.location.pathname;
+                                    id = id.split('/');
+                                    this.props.sendComment(Number(id[1]));
+                                    }}
                     >Add Comment</Button>{' '}</div>
                 </div>
             </div>
