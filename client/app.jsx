@@ -21,13 +21,13 @@ class App extends React.Component {
     }
 
     getAuthorImg(name,cb) {
-        axios.get(`http://localhost:4003/userid/${name}`).then((data)=>{
-            axios.get(`http://localhost:4003/usersthumbnail/${data.data}`).then((data)=>{cb(data)})
+        axios.get(`http://localhost:8081/userid/${name}`).then((data)=>{
+            axios.get(`http://localhost:8081/usersthumbnail/${data.data}`).then((data)=>{cb(data)})
         })
     }
 
     getDetail(video_id) {
-        axios.get(`http://localhost:4003/details/${video_id}`).then((data)=>{
+        axios.get(`http://localhost:8081/details/${video_id}`).then((data)=>{
             console.log("service data", data)
             this.setState({
                 details: data.data[0].description

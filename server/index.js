@@ -66,7 +66,7 @@ app.get('/details/:video_id', function (req, res) {
 });
 
 app.post('/comments/:video_id', function (req, res) {
-    console.log(req)
+    console.log('REQ BODY', req.body);
     saveComment(req.body.video_id, req.body.user_id, req.body.comment, req.body.date, ()=>{
         console.log('Saved comment to database')
         res.send('Saved comment to database');
@@ -75,3 +75,4 @@ app.post('/comments/:video_id', function (req, res) {
 });
 
 module.exports = app;
+

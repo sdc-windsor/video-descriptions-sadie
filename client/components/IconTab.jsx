@@ -91,7 +91,7 @@ class IconTab extends React.Component {
     }
 
     getNumOfComments(video_id) {
-        axios.get(`http://localhost:4003/comments/${video_id}`).then((data) => {
+        axios.get(`http://localhost:8081/comments/${video_id}`).then((data) => {
             this.setState({
                 numOfComments: data.data.length
             })
@@ -99,7 +99,7 @@ class IconTab extends React.Component {
     }
 
     getNumOfLikes(video_id) {
-        axios.get(`http://localhost:4003/categories/${video_id}`).then((data) => {
+        axios.get(`http://localhost:8081/categories/${video_id}`).then((data) => {
             this.setState({
                 numOfLikes: data.data.likes
             })
