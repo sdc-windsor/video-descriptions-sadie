@@ -16,7 +16,8 @@ class IconTab extends React.Component {
         this.state = {
             hover: false,
             numOfComments: 0,
-            numOfCollection: 0
+            numOfCollection: 0,
+            numOfLikes: 0
         }
     }
 
@@ -90,21 +91,32 @@ class IconTab extends React.Component {
 
     getNumOfComments(video_id) {
         axios.get(`http://localhost:4003/comments/${video_id}`).then((data) => {
+            console.log(data.data)
             this.setState({
                 numOfComments: data.data.length
             })
         })
     }
 
-    componentWillMount() {
+    getNumOfLikes(video_id) {
+        axios.get(`http://localhost:4003/categories/${video_id}`).then((data) => {
+            console.log(data.data)
+            this.setState({
+                numOfLikes: data.data.likes
+            })
+        })
+    }
+
+    componentDidMount() {
         let id = window.location.pathname;
         id = id.split('/');
         this.getNumOfComments(Number(id[1]));
+        this.getNumOfLikes(Number(id[1]));
     }
 
     render() {
         return (
-            <div style={{paddingRight: '2%'}}>
+            <div style={{ paddingRight: '2%'}}>
                 <div style={{ float: 'left' }}>
                     <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
                         <TiMediaPlayOutline style={{ color: 'black', width: '2em', height: '2em' }} />
@@ -113,7 +125,7 @@ class IconTab extends React.Component {
                     &nbsp;
                     <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
                         <TiHeartOutline style={{ color: 'black', width: '1.75em', height: '2em' }} />
-                        <div style={{ display: 'inline', color: 'black' }}>{" " + this.shortenNum(this.props.data.plays)}</div>
+                        <div style={{ display: 'inline', color: 'black' }}>{" " + this.shortenNum(JSON.stringify(this.state.numOfLikes))}</div>
                     </Button>
                     &nbsp;
                     <Button style={{ backgroundColor: 'white', borderColor: 'white', width: '8em' }}>
@@ -137,5 +149,6 @@ class IconTab extends React.Component {
     }
 
 }
+
 
 export default IconTab;
