@@ -15,7 +15,8 @@ class App extends React.Component {
         this.state = {
             authorImg: '',
             details: '',
-            categories: []
+            categories: [],
+            data: {}
         }
         this.getAuthorImg = this.getAuthorImg.bind(this);
     }
@@ -47,6 +48,9 @@ class App extends React.Component {
         let id = window.location.pathname;
         id = id.split('/');
         axios.get(`http://localhost:4003/videos/${Number(id[1])}`).then((data)=>{
+            this.setState({
+                data: data.data
+            }),
             this.getAuthorImg(data.data.author,(data)=>{
                 this.setState({
                     authorImg: data.data.user_thumbnail
@@ -60,7 +64,7 @@ class App extends React.Component {
     render() {
         return (
             <div style={{paddingLeft: '2.5rem', paddingTop: '2.5rem', float: 'left'}}>
-                <Title data={descriptions[0]}
+                <Title data={this.state.data}
                        authorImg={this.state.authorImg}
                 />
                 <LineDivider />
