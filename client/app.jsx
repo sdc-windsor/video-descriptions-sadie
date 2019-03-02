@@ -49,11 +49,11 @@ class App extends React.Component {
         id = id.split('/');
         axios.get(`http://localhost:4003/videos/${Number(id[1])}`).then((data)=>{
             this.setState({
-                data: data.data
+                data: data.data[0]
             }),
-            this.getAuthorImg(data.data.author,(data)=>{
+            this.getAuthorImg(data.data[0].author,(data)=>{
                 this.setState({
-                    authorImg: data.data.user_thumbnail
+                    authorImg: data.data[0].user_thumbnail
                 })
             });
         })
