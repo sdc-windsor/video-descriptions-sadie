@@ -36,7 +36,7 @@ class App extends React.Component {
     }
 
     getCategories(video_id) {
-        axios.get(`http://localhost:4003/categories/${video_id}`).then((data)=>{
+        axios.get(`http://localhost:8081/categories/${video_id}`).then((data)=>{
             this.setState({
                 categories: data.data.categories
             });
@@ -46,7 +46,7 @@ class App extends React.Component {
     componentDidMount() {
         let id = window.location.pathname; //  '/5/'
         id = id.split('/');
-        axios.get(`http://localhost:4003/videos/${Number(id[1])}`).then((data)=>{
+        axios.get(`http://localhost:3000/videos/${Number(id[1])}`).then((data)=>{
             this.setState({
                 data: data.data[0]
             }),
