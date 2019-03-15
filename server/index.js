@@ -9,7 +9,8 @@ const cors = require('cors');
 
 // const PORT = 8080 || process.env.PORT;
 app.use(bodyParser.json());
-app.use(express.static('./public'));
+app.use('/:id', express.static('./public'));
+
 app.use(cors());
 app.get('/categories/:video_id', function (req, res) {
     Description.findOne({video_id: req.params.video_id}).then((data)=>{
