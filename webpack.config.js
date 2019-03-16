@@ -1,5 +1,11 @@
+const path = require('path');
+
 module.exports = {
     entry: ['@babel/polyfill', __dirname + '/client/index.jsx'],
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'public')
+    },
     module: {
       rules: [
         {
@@ -17,9 +23,5 @@ module.exports = {
           use: ['style-loader', 'css-loader'],
         }
       ]
-    },
-     output: {
-      filename: 'App.js',
-      path: __dirname + '/public'
     }
   };

@@ -6,12 +6,16 @@ const Comment = require('../database/index').Comment;
 const saveComment = require('../database/helper').saveComment;
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 // const PORT = 8080 || process.env.PORT;
 app.use(bodyParser.json());
-app.use('/:id', express.static('./public', {maxAge:1000}));
 
 app.use(cors());
+
+app.use(express.static('public'));
+app.use('/:id', express.static('public'));
+
 app.get('/categories/:video_id', function (req, res) {
     Description.findOne({video_id: req.params.video_id}).then((data)=>{
         res.json(data);
