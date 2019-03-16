@@ -13,7 +13,7 @@ class AddComment extends React.Component {
     }
 
     getUserInfo(user_id) {
-        axios.get(`http://localhost:8081/usersthumbnail/${user_id}`).then((data) => {
+        axios.get(`http://localhost:3003/usersthumbnail/${user_id}`).then((data) => {
             this.setState({
                 info: data.data
             })
@@ -21,7 +21,7 @@ class AddComment extends React.Component {
     }
 
     componentDidMount() {
-        this.getUserInfo('5c8b1feba0a0f7484fb970b2');
+        this.getUserInfo('5c8af5c688b597cb7b7e4658');
     }
 
     render() {

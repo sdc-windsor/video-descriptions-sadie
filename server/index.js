@@ -9,7 +9,7 @@ const cors = require('cors');
 
 // const PORT = 8080 || process.env.PORT;
 app.use(bodyParser.json());
-app.use('/:id', express.static('./public'));
+app.use('/:id', express.static('./public', {maxAge:1000}));
 
 app.use(cors());
 app.get('/categories/:video_id', function (req, res) {
