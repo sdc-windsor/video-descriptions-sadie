@@ -47,7 +47,7 @@ class App extends React.Component {
         let id = window.location.pathname; //  '/5/'
         id = id.split('/');
         console.log(id);
-        axios.get(`http://localhost:3000/videos/${Number(id[1])}`).then((data) => {
+        axios.get(`http://localhost:3001/videos/${Number(id[1])}`).then((data) => {
             console.log('Jason data', data);
             this.setState({
                 data: data.data[0]
