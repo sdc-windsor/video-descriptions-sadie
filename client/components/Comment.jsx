@@ -13,7 +13,7 @@ class Comment extends React.Component{
     }
 
     getUserInfo(user_id) {
-        axios.get(`http://localhost:8081/usersthumbnail/${user_id}`).then((data)=>{
+        axios.get(`http://localhost:3003/usersthumbnail/${user_id}`).then((data)=>{
             this.setState({
                 info: data.data
             })
