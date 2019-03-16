@@ -21,7 +21,7 @@ export default class CommentsList extends React.Component {
     }
 
     getComments(video_id) {
-        axios.get(`http://localhost:8081/comments/${video_id}`).then((data)=>{
+        axios.get(`http://localhost:3003/comments/${video_id}`).then((data)=>{
             this.setState({
                 userInfo: data.data.map((ele)=>{
                     return ele
@@ -41,7 +41,7 @@ export default class CommentsList extends React.Component {
             }
         }
 
-        axios.post(`http://localhost:8081/comments/${video_id}`, data).then(()=>{
+        axios.post(`http://localhost:3003/comments/${video_id}`, data).then(()=>{
             console.log('posted')
             let id = window.location.pathname;
             id = id.split('/');
