@@ -35,4 +35,5 @@ const bulkUpload = (targetTable, batchFile) => {
 let batchFiles = _.range(1, 11).map(num => path.join(__dirname, `/batch_${num}_description.txt`));
 let table = 'descriptions';
 // Execute the function
-bulkUpload(table, batchFiles[1])
+bulkUpload(table, batchFiles[9])
+
