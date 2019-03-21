@@ -26,3 +26,5 @@ dist/
 
 # fake data
 *batch*
+
+config.js
