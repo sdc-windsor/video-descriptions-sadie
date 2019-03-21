@@ -24,3 +24,5 @@ coverage
 build/
 dist/
 
+# fake data
+*batch*
