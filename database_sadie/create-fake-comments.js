@@ -37,10 +37,9 @@ async function writeBatchComments(ids, fileName, comment_id) {
 
 }
 
-
 async function createFakeComments() {
   let start = 1;
-  let end = 1000001;
+  let end = 500001;
   var comment_id = 1;
   for (let i = 0; i < 10; i++) {
     let ids = _.range(start, end);
@@ -52,3 +51,6 @@ async function createFakeComments() {
 
 createFakeComments()
 
+var comment_id = 1;
+comment_id =  writeBatchComments(_.range(1, 1000001), `/batch_1_comments.txt`, comment_id);
+console.log(comment_id)

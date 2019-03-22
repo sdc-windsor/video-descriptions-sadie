@@ -2,10 +2,6 @@ const faker = require('faker');
 const _ = require('underscore')
 const { writeBatch, getRandomInt } = require('./fake-data-helpers.js')
 
-const getRandomInt = function (max) {
-  return Math.floor(Math.random() * (max)) + 1;
-}
-
 const categories = ['Animation', 'Comedy', 'Music', 'Education', 'Art & Design', 'Documentary', 'Food', 'Fashion', 'Travel', 'Journalism']
 const getCategories = () => {
   return _.sample(categories, getRandomInt(5));
