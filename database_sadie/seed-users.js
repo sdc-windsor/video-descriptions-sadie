@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 const copyFrom = require('pg-copy-streams').from;
 const config = require('./../config.js');
-const _ = require('underscore');
 
 const client = new Client({
   user: config.user,
@@ -15,7 +14,7 @@ client.connect()
 
 const uploadBatch = (targetTable, batchFile) => {
 
-  var stream = client.query(copyFrom(`COPY ${targetTable} FROM STDIN DELIMITER E'\t'`))
+  var stream = client.query(copyFrom(`COPY ${targetTable} FROM STDIN CSV`))
   var fileStream = fs.createReadStream(batchFile)
 
   fileStream.on('error', (error) => {
@@ -26,20 +25,10 @@ const uploadBatch = (targetTable, batchFile) => {
   })
   stream.on('end', () => {
     console.log(`Completed loading ${batchFile} into ${targetTable}`)
-    // client.end()
+    client.end()
   })
   fileStream.pipe(stream);
 
 }
-// batch file to upload to db table
-async function bulkUpload(fileNames, table) {
-  fileNames.forEach((fileName) => {
-    await uploadBatch(table, fileName);
-  })
-}
 
-// Execute the function
-let descriptionBatchFiles = _.range(1, 11).map(num => path.join(__dirname, `/batch_${num}_description.txt`));
-bulkUpload(descriptionBatchFiles, 'descriptions');
-
-client.end()
+uploadBatch(__dirname + '/batch_1_users.txt', 'users');

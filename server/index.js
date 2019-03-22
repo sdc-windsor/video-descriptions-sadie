@@ -78,5 +78,7 @@ app.post('/comments/:video_id', function (req, res) {
     })
 });
 
+/// need full CRUD for description and comments
+
 module.exports = app;
 
