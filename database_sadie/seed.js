@@ -25,22 +25,21 @@ const uploadBatch = (targetTable, batchFile) => {
     console.log(`Error in creating stream ${error}`)
   })
   stream.on('end', () => {
-    console.log(`Completed loading data into ${targetTable}`)
-    client.end()
+    console.log(`Completed loading ${batchFile} into ${targetTable}`)
+    // client.end()
   })
   fileStream.pipe(stream);
 
 }
 // batch file to upload to db table
-let batchFiles = _.range(1, 11).map(num => path.join(__dirname, `/batch_${num}_description.txt`));
-let table = 'descriptions';
-
-
-async function bulkUpload(fileNames) {
+async function bulkUpload(fileNames, table) {
   fileNames.forEach((fileName) => {
-    await bulkUpload(table, fileName);
+    await uploadBatch(table, fileName);
   })
 }
 
 // Execute the function
-bulkUpload(batchFiles);
+let descriptionBatchFiles = _.range(1, 11).map(num => path.join(__dirname, `/batch_${num}_description.txt`));
+bulkUpload(descriptionBatchFiles, 'descriptions');
+
+client.end()
