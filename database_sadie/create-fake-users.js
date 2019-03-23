@@ -10,9 +10,9 @@ function makeUser(id) {
 }
 
 function createFakeUsers() {
-  let ids = _.range(1, 30000);
+  let ids = _.range(1, 30001);
   writeBatch(ids, `/batch_1_users.txt`, makeUser);
 }
 
-// create 29,999 users
+// create 30000 users
 createFakeUsers();

@@ -15,33 +15,3 @@ const writeBatch = (ids, fileName, fakeDataFunction) => {
 }
 
 module.exports = { writeBatch, getRandomInt }
-
-
-
-// logUser();
-
-
-// //function that save video comments to database
-// async function logComment() {
-//     for (let i = 1; i < 101; i++) {
-//         for (let j = 0; j < 10; j++) {
-//             const randomComment = await faker.lorem.sentences();
-//             const randomDate = await faker.date.past();
-//             const user_id = await User.findOne({username: videoData[j].author});
-//             console.log(user_id._id);
-//             await saveComment(i, user_id._id, randomComment, randomDate, () => {
-//                 console.log(videoData[j].author);
-//                 console.log(i,j)
-//             })
-//         }
-
-//     }
-// }
-
-// logComment();
-
-// const faker = require('faker');
-
-// var make_user = function(id) {
-
-// }

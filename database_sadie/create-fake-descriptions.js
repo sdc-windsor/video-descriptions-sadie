@@ -34,13 +34,3 @@ async function createFakeDescriptions() {
 
 // create 10 million fake descriptions
 createFakeDescriptions();
-
-// const getDescriptionJSON = (id) => {
-//   return {
-//     _id: id,
-//     video_id: id,
-//     description: faker.lorem.paragraph(),
-//     categories: getCategories(),
-//     likes: getRandomLikes()
-//   }
-// }
