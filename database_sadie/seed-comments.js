@@ -33,11 +33,9 @@ const uploadBatch = (targetTable, batchFile) => {
 }
 
 async function uploadAll() {
-  for (var i = 1; i < 11; i++) {
-    await uploadBatch('descriptions', path.join(__dirname, `batch_${i}_description.txt`))
+  for (var i = 1; i < 41; i++) {
+    await uploadBatch('comments', path.join(__dirname, `batch_${i}_comments.txt`))
   }
 }
-async function run() {
-  await uploadAll();
-  client.end();
-}
+
+uploadAll();
