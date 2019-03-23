@@ -18,3 +18,26 @@ vimeo=# CREATE TABLE descriptions (
     likes INT
 );
 ```
+
+Create users table
+
+```
+psql -U postgres vimeo
+vimeo=# CREATE TABLE users (
+    _id INT,
+    username TEXT,
+    user_thumbnail TEXT
+);
+```
+
+Create comments table
+
+```
+psql -U postgres vimeo
+vimeo=# CREATE TABLE comments (
+    _id TEXT,
+    video_id INT,
+    user_id INT,
+    comment TEXT
+);
+```

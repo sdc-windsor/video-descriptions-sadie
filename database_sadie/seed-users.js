@@ -31,4 +31,4 @@ const uploadBatch = (targetTable, batchFile) => {
 
 }
 
-uploadBatch(__dirname + '/batch_1_users.txt', 'users');
+uploadBatch('users', path.join(__dirname, 'batch_1_users.csv'));
