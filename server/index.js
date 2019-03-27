@@ -1,11 +1,7 @@
 const express = require('express');
 const app = express();
 const pool = require('../database/index.js');
-// const Description = require('../database/index').Description;
-// const User = require('../database/index').User;
-// const Comment = require('../database/index').Comment;
 const faker = require('faker');
-const saveComment = require('../database/helper').saveComment;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
