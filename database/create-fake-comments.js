@@ -8,12 +8,13 @@ const getRandomCommentQuantity = () => {
 }
 
 const makeComment = (id) => {
-  let _id = faker.random.alphaNumeric(10).toLocaleUpperCase();
+  let _id = faker.random.alphaNumeric(10).toUpperCase();
   let video_id = id;
   let user_id = getRandomInt(30000);
   let comment = faker.lorem.sentence();
+  let date = faker.date.between('2016-01-01', '2019-03-01');
 
-  return [_id, video_id, user_id, comment].join(', ');
+  return [_id, video_id, user_id, comment, date].join(', ');
 };
 
 async function writeBatchComments(ids, fileName) {
