@@ -33,7 +33,7 @@ export default class CommentsList extends React.Component {
     sendComment(video_id){
         let data = {
             video_id: video_id,
-            user_id: '5c7af250b5479233947f45c2',
+            user_id: '3',
             comment: this.state.commentToSend,
             date: new Date(),
             func: () => {

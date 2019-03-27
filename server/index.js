@@ -81,7 +81,7 @@ app.post('/comments', function (req, res) {
 app.get('/comments/:video_id', function (req, res) {
 	pool.query('SELECT * FROM comments WHERE video_id = $1', [req.params.video_id])
 		.then(data => {
-			res.json(data.rows[0]);
+			res.json(data.rows);
 			res.end();
 		})
 		.catch(e => console.log(e))
