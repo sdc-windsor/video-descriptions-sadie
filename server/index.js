@@ -46,43 +46,26 @@ app.get('/userid/:username', function (req, res) {
 
 app.get('/videosByCategory/:category', function (req, res) {
 	pool.query('SELECT * FROM descriptions WHERE $1 = ANY (categories);', [req.params.categories])
-	.then(data => {
-		res.json(data.rows[0]);
-		res.end();
-	})
-	.catch(e => console.log(e))
+		.then(data => {
+			res.json(data.rows[0]);
+			res.end();
+		})
+		.catch(e => console.log(e))
 });
 
-app.get('/comments/:video_id', function (req, res) {
-	pool.query('SELECT * FROM comments WHERE video_id = $1', [req.params.video_id])
-	.then(data => {
-		res.json(data.rows[0]);
-		res.end();
-	})
-	.catch(e => console.log(e))
-});
 
 app.get('/details/:video_id', function (req, res) {
 	pool.query('SELECT * FROM descriptions WHERE video_id = $1', [req.params.video_id])
-	.then(data => {
-		res.json(data.rows[0]);
-		res.end();
-	})
-	.catch(e => console.log(e))
+		.then(data => {
+			res.json(data.rows[0]);
+			res.end();
+		})
+		.catch(e => console.log(e))
 });
 
-app.post('/comments/:video_id', function (req, res) {
-	console.log('REQ BODY', req.body);
-	saveComment(req.body.video_id, req.body.user_id, req.body.comment, req.body.date, () => {
-		console.log('Saved comment to database')
-		res.send('Saved comment to database');
-		res.end();
-	})
 
-});
 
 /// need full CRUD for description and comments
-// POST /comments?video_id=2&user_id=2&comment=dogs+smell+bad
 app.post('/comments', function (req, res) {
 	let _id = faker.random.alphaNumeric(10).toUpperCase();
 	let video_id = req.query.video_id;
@@ -91,30 +74,78 @@ app.post('/comments', function (req, res) {
 	pool.query(
 		'INSERT INTO comments (_id, video_id, user_id, comment) VALUES ($1, $2, $3, $4)',
 		[_id, video_id, user_id, comment])
+		.then(data => {
+			console.log(data);
+			res.send('Success');
+			res.end();
+		})
+		.catch(e => console.log(e))
+})
+
+app.get('/comments/:video_id', function (req, res) {
+	pool.query('SELECT * FROM comments WHERE video_id = $1', [req.params.video_id])
+		.then(data => {
+			res.json(data.rows[0]);
+			res.end();
+		})
+		.catch(e => console.log(e))
+});
+
+app.put('/comments', function (req, res) {
+		pool.query(
+			'UPDATE comments SET video_id = $1, user_id = $2, comment = $3 WHERE video_id = $1',
+			[req.query.video_id, req.query.user_id, req.query.comment])
+		.then(data => {
+			console.log(data);
+			res.send('updated');
+			res.end();
+		})
+		.catch(e => console.log(e))
+})
+
+app.delete('/comments', function (req, res) {
+	pool.query('DELETE FROM comments WHERE video_id = $1;', [req.params.video_id])
 	.then(data => {
-		console.log(data);
-		res.send('Success');
+		res.send('deleted')
 		res.end();
 	})
 	.catch(e => console.log(e))
-})
-
-app.post('/descriptions/', function (req, res) {
-})
-
-app.put('/comments/', function (req, res) {
 
 })
 
-app.put('/descriptions/', function (req, res) {
+
+app.post('/descriptions', function (req, res) {
+	let video_id = req.query.video_id;
+	let description = req.query.description;
+	let categories = "ARRAY" + JSON.stringify(req.query.categories.split(' '));
+	let likes = 0;
+	pool.query(
+		'INSERT INTO descriptions (video_id, description, categories, likes) VALUES ($1, $2, $3, $4)',
+		[video_id, description, categories, likes])
+		.then(data => {
+			console.log(data);
+			res.send('Success');
+			res.end();
+		})
+		.catch(e => console.log(e))
+})
+
+app.get('/descriptions/:video_id', function (req, res) {
+	pool.query('SELECT * FROM descriptions WHERE video_id = $1', [req.params.video_id])
+		.then(data => {
+			res.json(data.rows[0]);
+			res.end();
+		})
+		.catch(e => console.log(e))
+});
+
+app.put('/descriptions', function (req, res) {
 
 })
 
-app.delete('/comments/', function (req, res) {
 
-})
 
-app.delete('/descriptions/', function (req, res) {
+app.delete('/descriptions', function (req, res) {
 
 })
 
