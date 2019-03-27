@@ -34,7 +34,6 @@ class Comment extends React.Component{
     render() {
         return (
             <div style={{  borderTop: '0.05em solid #e8eaed', borderBottom: '0.05em solid #e8eaed', paddingTop: '1em', paddingBottom: '1em'}}>
-                {console.log(this.state.info)}
                 <img src={this.state.info.user_thumbnail} style={userThumbNail} />
                 <div style={{display: 'inline', padding:'1em', fontWeight: 'bold'}}>{this.state.info.username}</div>
                 <div style={{display: 'inline', padding:'1em'}}>{this.state.timeDifference}</div>

@@ -42,6 +42,7 @@ export default class CommentsList extends React.Component {
         }
 
         axios.post(`http://localhost:3003/comments/${video_id}`, data).then(()=>{
+            //TODO
             console.log('posted')
             let id = window.location.pathname;
             id = id.split('/');

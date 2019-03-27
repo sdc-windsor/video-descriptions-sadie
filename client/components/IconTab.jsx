@@ -23,7 +23,6 @@ class IconTab extends React.Component {
 
     shortenNum(num) {
         const stringifiedNum = typeof num === 'string' ? num : JSON.stringify(num);
-        console.log(stringifiedNum)
         if (stringifiedNum.length >= 7 && stringifiedNum.length < 10) {
             const milDigit = stringifiedNum.slice(0, stringifiedNum.length - 4);
             return this.convertMilToString(stringifiedNum, milDigit);
@@ -55,7 +54,6 @@ class IconTab extends React.Component {
 
     convertBilToString(stringifiedNum, bilDigit) {
         if (Number(bilDigit[bilDigit.length - 1]) >= 5) {
-            console.log('last digit >5')
             let newNum = Number(bilDigit.slice(0, bilDigit.length - 1)) + 1;
             let newArr = newNum.toString().split('');
             newArr.splice(newArr.length - 1, 0, ".")
@@ -111,7 +109,6 @@ class IconTab extends React.Component {
         id = id.split('/');
         this.getNumOfComments(Number(id[1]));
         this.getNumOfLikes(Number(id[1]));
-        console.log(this.state.numOfLikes, this.state.numOfComments)
     }
 
     render() {

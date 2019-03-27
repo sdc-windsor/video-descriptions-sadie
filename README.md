@@ -60,7 +60,7 @@ vimeo=# CREATE TABLE comments (
     video_id INT,
     user_id INT,
     comment TEXT,
-    date TEXT
+    date TIME
 );
 ```
 
