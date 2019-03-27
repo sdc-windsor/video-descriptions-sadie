@@ -92,9 +92,9 @@ app.get('/comments/:video_id', function (req, res) {
 });
 
 app.put('/comments', function (req, res) {
-		pool.query(
-			'UPDATE comments SET video_id = $1, user_id = $2, comment = $3 WHERE video_id = $1',
-			[req.query.video_id, req.query.user_id, req.query.comment])
+	pool.query(
+		'UPDATE comments SET user_id = $2, comment = $3 WHERE video_id = $1',
+		[req.query.video_id, req.query.user_id, req.query.comment])
 		.then(data => {
 			console.log(data);
 			res.send('updated');
@@ -105,14 +105,13 @@ app.put('/comments', function (req, res) {
 
 app.delete('/comments', function (req, res) {
 	pool.query('DELETE FROM comments WHERE video_id = $1;', [req.params.video_id])
-	.then(data => {
-		res.send('deleted')
-		res.end();
-	})
-	.catch(e => console.log(e))
+		.then(data => {
+			res.send('deleted')
+			res.end();
+		})
+		.catch(e => console.log(e))
 
 })
-
 
 app.post('/descriptions', function (req, res) {
 	let video_id = req.query.video_id;
@@ -140,13 +139,29 @@ app.get('/descriptions/:video_id', function (req, res) {
 });
 
 app.put('/descriptions', function (req, res) {
-
+	let video_id = req.query.video_id;
+	let description = req.query.description;
+	let categories = "ARRAY" + JSON.stringify(req.query.categories.split(' '));
+	let likes = req.query.likes;
+	pool.query(
+		'UPDATE descriptions SET description = $2, categories = $3, likes = $4 WHERE video_id = $1',
+		[[video_id, description, categories, likes]])
+		.then(data => {
+			console.log(data);
+			res.send('updated');
+			res.end();
+		})
+		.catch(e => console.log(e))
 })
 
 
-
 app.delete('/descriptions', function (req, res) {
-
+	pool.query('DELETE FROM descriptions WHERE video_id = $1;', [req.params.video_id])
+		.then(data => {
+			res.send('deleted')
+			res.end();
+		})
+		.catch(e => console.log(e))
 })
 
 
