@@ -4,6 +4,7 @@ const pool = require('../database/index.js');
 // const Description = require('../database/index').Description;
 // const User = require('../database/index').User;
 // const Comment = require('../database/index').Comment;
+const faker = require('faker');
 const saveComment = require('../database/helper').saveComment;
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -44,24 +45,12 @@ app.get('/userid/:username', function (req, res) {
 })
 
 app.get('/videosByCategory/:category', function (req, res) {
-	const arrayOfCategories = [];
-	const splitParams = req.params.category.split(',');
-	for (let l = 0; l < splitParams.length; l++) {
-		arrayOfCategories.push({
-			categories: {
-				// "/mon/i"
-				$regex: new RegExp(`${splitParams[l]}`, 'i')
-			}
-		})
-	}
-
-	Description.find({ $and: arrayOfCategories })
-		.then((data) => {
-			res.json(data);
-			res.end();
-		});
-
 	pool.query('SELECT * FROM descriptions WHERE $1 = ANY (categories);', [req.params.categories])
+	.then(data => {
+		res.json(data.rows[0]);
+		res.end();
+	})
+	.catch(e => console.log(e))
 });
 
 app.get('/comments/:video_id', function (req, res) {
@@ -93,6 +82,42 @@ app.post('/comments/:video_id', function (req, res) {
 });
 
 /// need full CRUD for description and comments
+// POST /comments?video_id=2&user_id=2&comment=dogs+smell+bad
+app.post('/comments', function (req, res) {
+	let _id = faker.random.alphaNumeric(10).toUpperCase();
+	let video_id = req.query.video_id;
+	let user_id = req.query.user_id;
+	let comment = req.query.comment;
+	pool.query(
+		'INSERT INTO comments (_id, video_id, user_id, comment) VALUES ($1, $2, $3, $4)',
+		[_id, video_id, user_id, comment])
+	.then(data => {
+		console.log(data);
+		res.send('Success');
+		res.end();
+	})
+	.catch(e => console.log(e))
+})
+
+app.post('/descriptions/', function (req, res) {
+})
+
+app.put('/comments/', function (req, res) {
+
+})
+
+app.put('/descriptions/', function (req, res) {
+
+})
+
+app.delete('/comments/', function (req, res) {
+
+})
+
+app.delete('/descriptions/', function (req, res) {
+
+})
+
 
 module.exports = app;
 
