@@ -2,18 +2,18 @@
 
 ## Comments
 
-* `POST /comments?video_id=2&user_id=2&comment=dogs+smell+bad`
+* `POST /comments/` body include: video_id, user_id, and comment
 * `GET /comments/video_id`
-* `PUT /comments?video_id=2&user_id=2&comment=dogs+smell+good`
-* `DELETE /comments/video_id`
+* `PUT /comments/_id` body include: video_id, user_id, and comment
+* `DELETE /comments/_id`
 
 ## Descriptions
 
 Category options: 'Animation', 'Comedy', 'Music', 'Education', 'Art & Design', 'Documentary', 'Food', 'Fashion', 'Travel', 'Journalism'
 
-* `POST /descriptions?video_id=10000001&description=video+of+dogs+smelling+bad&categories=Animation+Food`
+* `POST /descriptions` body include: video_id, description, and an array of categories
 * `GET /descriptions/video_id`
-* `PUT /descriptions?video_id=2&description=video+of+cats&categories=Documentary`
+* `PUT /descriptions` body include: video_id, description, and an array of categories
 * `DELETE /descriptions/video_id`
 
 

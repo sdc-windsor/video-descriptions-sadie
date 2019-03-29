@@ -60,16 +60,14 @@ app.get('/details/:video_id', function (req, res) {
 });
 
 
-
 /// need full CRUD for description and comments
-app.post('/comments', function (req, res) {
-	let _id = faker.random.alphaNumeric(10).toUpperCase();
-	let video_id = req.query.video_id;
-	let user_id = req.query.user_id;
-	let comment = req.query.comment;
+app.post('/comments/', function (req, res) {
+	const _id = faker.random.alphaNumeric(10).toUpperCase();
+	const {video_id, user_id, comment, date} = req.body;
+
 	pool.query(
-		'INSERT INTO comments (_id, video_id, user_id, comment) VALUES ($1, $2, $3, $4)',
-		[_id, video_id, user_id, comment])
+		'INSERT INTO comments (_id, video_id, user_id, comment, date) VALUES ($1, $2, $3, $4, $5)',
+		[_id, video_id, user_id, comment, date])
 		.then(data => {
 			console.log(data);
 			res.send('Success');
@@ -79,6 +77,7 @@ app.post('/comments', function (req, res) {
 })
 
 app.get('/comments/:video_id', function (req, res) {
+	// 'SELECT * FROM comments WHERE video_id = $1 ORDER BY DATE DESC'
 	pool.query('SELECT * FROM comments WHERE video_id = $1', [req.params.video_id])
 		.then(data => {
 			res.json(data.rows);
@@ -87,10 +86,21 @@ app.get('/comments/:video_id', function (req, res) {
 		.catch(e => console.log(e))
 });
 
-app.put('/comments', function (req, res) {
+app.get('/comments/', function (req, res) {
+	//figure out pagnation
+	// pool.query('SELECT * FROM comments ORDER BY video_id ASC', [req.params.video_id])
+	// 	.then(data => {
+	// 		res.json(data.rows);
+	// 		res.end();
+	// 	})
+	// 	.catch(e => console.log(e))
+});
+
+app.put('/comments/:_id', function (req, res) {
+	const date = new Date();
 	pool.query(
-		'UPDATE comments SET user_id = $2, comment = $3 WHERE video_id = $1',
-		[req.query.video_id, req.query.user_id, req.query.comment])
+		'UPDATE comments SET video_id = $1 user_id = $2, comment = $3, date = $4 WHERE _id = $1',
+		[req.body.video_id, req.body.user_id, req.body.comment, date])
 		.then(data => {
 			console.log(data);
 			res.send('updated');
@@ -99,8 +109,8 @@ app.put('/comments', function (req, res) {
 		.catch(e => console.log(e))
 })
 
-app.delete('/comments', function (req, res) {
-	pool.query('DELETE FROM comments WHERE video_id = $1;', [req.params.video_id])
+app.delete('/comments/:_id', function (req, res) {
+	pool.query('DELETE FROM comments WHERE _id = $1;', [req.params._id])
 		.then(data => {
 			res.send('deleted')
 			res.end();
@@ -109,11 +119,11 @@ app.delete('/comments', function (req, res) {
 
 })
 
-app.post('/descriptions', function (req, res) {
-	let video_id = req.query.video_id;
-	let description = req.query.description;
-	let categories = "ARRAY" + JSON.stringify(req.query.categories.split(' '));
-	let likes = 0;
+app.post('/descriptions/', function (req, res) {
+	const video_id = req.body.video_id;
+	const description = req.body.description;
+	const categories = "ARRAY" + JSON.stringify(req.body.categories);
+	const likes = 0;
 	pool.query(
 		'INSERT INTO descriptions (video_id, description, categories, likes) VALUES ($1, $2, $3, $4)',
 		[video_id, description, categories, likes])
@@ -134,11 +144,21 @@ app.get('/descriptions/:video_id', function (req, res) {
 		.catch(e => console.log(e))
 });
 
-app.put('/descriptions', function (req, res) {
-	let video_id = req.query.video_id;
-	let description = req.query.description;
-	let categories = "ARRAY" + JSON.stringify(req.query.categories.split(' '));
-	let likes = req.query.likes;
+app.get('/descriptions/', function (req, res) {
+	// figure out pagnation
+	// pool.query('SELECT * FROM descriptions WHERE video_id = $1 ORDER BY video_id ASC', [req.params.video_id])
+	// 	.then(data => {
+	// 		res.json(data.rows[0]);
+	// 		res.end();
+	// 	})
+	// 	.catch(e => console.log(e))
+});
+
+app.put('/descriptions/:video_id', function (req, res) {
+	const video_id = req.body.video_id;
+	const description = req.body.description;
+	const categories = "ARRAY" + JSON.stringify(req.body.categories);
+	const likes = req.body.likes;
 	pool.query(
 		'UPDATE descriptions SET description = $2, categories = $3, likes = $4 WHERE video_id = $1',
 		[[video_id, description, categories, likes]])
@@ -151,7 +171,7 @@ app.put('/descriptions', function (req, res) {
 })
 
 
-app.delete('/descriptions', function (req, res) {
+app.delete('/descriptions/:video_id', function (req, res) {
 	pool.query('DELETE FROM descriptions WHERE video_id = $1;', [req.params.video_id])
 		.then(data => {
 			res.send('deleted')
