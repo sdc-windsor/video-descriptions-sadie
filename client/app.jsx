@@ -7,6 +7,7 @@ import IconTab from './components/IconTab.jsx';
 import LineDivider from './components/LineDivider.jsx';
 import DetailCom from './components/DetailCom.jsx';
 import CommentsList from './components/CommentsList.jsx';
+import { Date } from "core-js";
 
 class App extends React.Component {
     constructor(props) {
@@ -28,8 +29,9 @@ class App extends React.Component {
 
     getDetail(video_id) {
         axios.get(`http://localhost:3003/details/${video_id}`).then((data) => {
+            console.log(data)
             this.setState({
-                details: data.data[0].description
+                details: data.data.description
             });
         });
     }
