@@ -12,7 +12,7 @@ const makeComment = (id) => {
   let video_id = id;
   let user_id = getRandomInt(30000);
   let comment = faker.lorem.sentence();
-  let date = faker.date.between('2016-01-01', '2019-03-01');
+  let date = faker.date.between('2016-01-01', '2019-03-01').toISOString().substr(0, 19).replace('T', ' ');
 
   return [_id, video_id, user_id, comment, date].join(', ');
 };
@@ -52,17 +52,17 @@ async function blah (n, s) {
 
 // console.log(_.range(1, 10000000, 1250000))
 
-// blah(0, 1);
+blah(0, 1);
 // blah(5, 1250001)
 // blah(10, 2500001)
 // blah(15, 3750001)
 // blah(20, 5000001)
 // blah(25, 6250001)
-async function bleep() {
-  await blah(30, 7500001)
-}
-bleep();
-async function bleep2() {
-  await blah(35, 8750001)
-}
-bleep2();
+// async function bleep() {
+//   await blah(30, 7500001)
+// }
+// bleep();
+// async function bleep2() {
+//   await blah(35, 8750001)
+// }
+// bleep2();

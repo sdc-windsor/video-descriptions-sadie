@@ -60,7 +60,7 @@ vimeo=# CREATE TABLE comments (
     video_id INT,
     user_id INT,
     comment TEXT,
-    date TIME
+    date TIMESTAMPTZ
 );
 ```
 
@@ -71,4 +71,15 @@ psql -U postgres vimeo
 vimeo=# CREATE SEQUENCE seq_video_id;
 vimeo=# SELECT setval('seq_video_id', max(video_id)) FROM descriptions;
 vimeo=# ALTER TABLE descriptions ALTER COLUMN _id SET DEFAULT nextval('seq_video_id');
+```
+### Create Index
+
+After seeding the database:
+
+created index on video_id for descriptions and comments
+```
+psql -U postgres vimeo
+vimeo=# CREATE UNIQUE INDEX on descriptions (video_id);
+vimeo=# CREATE INDEX on comments (video_id);
+vimeo=# CREATE UNIQUE INDEX on users (_id);
 ```
