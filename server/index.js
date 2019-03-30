@@ -146,7 +146,7 @@ app.get('/descriptions/:video_id', function (req, res) {
 			res.end();
 		})
 		.catch(e => {
-			console.log(e)
+			// console.log(e)
 			res.status(404).end();
 		})
 });
