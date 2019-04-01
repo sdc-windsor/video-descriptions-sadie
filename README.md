@@ -34,7 +34,7 @@ psql=# \q
 ```
 psql -U postgres vimeo
 vimeo=# CREATE TABLE descriptions (
-    _id INT,
+    id INT,
     video_id INT,
     description TEXT,
     categories TEXT [],
@@ -47,7 +47,7 @@ vimeo=# CREATE TABLE descriptions (
 ```
 psql -U postgres vimeo
 vimeo=# CREATE TABLE users (
-    _id INT,
+    id INT,
     username TEXT,
     user_thumbnail TEXT
 );
@@ -58,7 +58,7 @@ vimeo=# CREATE TABLE users (
 ```
 psql -U postgres vimeo
 vimeo=# CREATE TABLE comments (
-    _id TEXT,
+    id TEXT,
     video_id INT,
     user_id INT,
     comment TEXT,
@@ -72,8 +72,46 @@ vimeo=# CREATE TABLE comments (
 psql -U postgres vimeo
 vimeo=# CREATE SEQUENCE seq_video_id;
 vimeo=# SELECT setval('seq_video_id', max(video_id)) FROM descriptions;
-vimeo=# ALTER TABLE descriptions ALTER COLUMN _id SET DEFAULT nextval('seq_video_id');
+vimeo=# ALTER TABLE descriptions ALTER COLUMN id SET DEFAULT nextval('seq_video_id');
 ```
+
+## Seeding Database
+
+To create fake comments for 10 million videos:
+
+1. open a terminal and navigate to project directory
+2. run the following commands
+
+```
+BATCH_NUM=0 node database/create-fake-comments.js
+BATCH_NUM=1 node database/create-fake-comments.js
+BATCH_NUM=2 node database/create-fake-comments.js
+BATCH_NUM=3 node database/create-fake-comments.js
+BATCH_NUM=4 node database/create-fake-comments.js
+BATCH_NUM=5 node database/create-fake-comments.js
+BATCH_NUM=6 node database/create-fake-comments.js
+BATCH_NUM=7 node database/create-fake-comments.js
+```
+3. run `node database/seed-comments.js`
+
+
+To create fake descriptions for 10 million videos:
+
+1. open a terminal and navigate to project directory
+2. run the following commands
+```
+BATCH_NUM=0 node database/create-fake-descriptions.js
+BATCH_NUM=1 node database/create-fake-descriptions.js
+BATCH_NUM=2 node database/create-fake-descriptions.js
+BATCH_NUM=3 node database/create-fake-descriptions.js
+BATCH_NUM=4 node database/create-fake-descriptions.js
+BATCH_NUM=5 node database/create-fake-descriptions.js
+BATCH_NUM=6 node database/create-fake-descriptions.js
+BATCH_NUM=7 node database/create-fake-descriptions.js
+BATCH_NUM=8 node database/create-fake-descriptions.js
+BATCH_NUM=9 node database/create-fake-descriptions.js
+```
+
 ### Create Index
 
 After seeding the database:
@@ -83,5 +121,5 @@ created index on video_id for descriptions and comments
 psql -U postgres vimeo
 vimeo=# CREATE UNIQUE INDEX on descriptions (video_id);
 vimeo=# CREATE INDEX on comments (video_id);
-vimeo=# CREATE UNIQUE INDEX on users (_id);
+vimeo=# CREATE UNIQUE INDEX on users (id);
 ```
