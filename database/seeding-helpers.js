@@ -4,8 +4,12 @@ const copyFrom = require('pg-copy-streams').from;
 const _ = require('underscore');
 
 const uploadBatch = (client, targetTable, batchFile) => {
+  if (targetTable === 'descriptions') {
+    var stream = client.query(copyFrom(`COPY ${targetTable} FROM STDIN with (format 'text')`));
+  } else {
+    var stream = client.query(copyFrom(`COPY ${targetTable} FROM STDIN CSV`));
+  }
 
-  var stream = client.query(copyFrom(`COPY ${targetTable} FROM STDIN CSV`))
   var fileStream = fs.createReadStream(batchFile)
 
   fileStream.on('error', (error) => {
@@ -22,9 +26,9 @@ const uploadBatch = (client, targetTable, batchFile) => {
 
 }
 
-async function uploadAll(client, targetTable, n) {
+async function uploadAll(client, targetTable, fileEnd, n) {
   for (var i = 1; i <= n; i++) {
-    await uploadBatch(client, targetTable, path.join(__dirname, `batch_${i}_${targetTable}.csv`))
+    await uploadBatch(client, targetTable, path.join(__dirname, `batch_${i}_${fileEnd}`))
   }
 }
 

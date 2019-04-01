@@ -17,13 +17,13 @@ const makeDescription = (id) => {
   let categories = '{' + getCategories().join(', ') + '}';
   let likes = getRandomLikes();
 
-  return [id, video_id, description, categories, likes].join(',')
+  return [id, video_id, description, categories, likes].join('\t')
 }
 
 function createFakeDescriptions(end, i) {
   const start = end - 1000000;
   const ids = _.range(start, end);
-  writeBatch(ids, `/batch_${Number(i) + 1}_descriptions.csv`, makeDescription)
+  writeBatch(ids, `/batch_${Number(i) + 1}_descriptions.txt`, makeDescription)
 }
 
 const batchNum = process.env.BATCH_NUM || 0;

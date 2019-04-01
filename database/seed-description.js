@@ -4,8 +4,8 @@ const helpers = require('./seeding-helpers');
 (async () => {
   const client = await pool.connect()
   try {
-    await helpers.uploadAll(client, 'descriptions', 10)
+    await helpers.uploadAll(client, 'descriptions', 'descriptions.txt', 10)
   } finally {
     // client.release()
   }
-})().catch(e => console.log(e.stack))
+})().catch(e => console.log(e))
