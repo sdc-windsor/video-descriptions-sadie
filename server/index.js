@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-// app.use(express.static('public'));
+app.use(express.static('public'));
 app.use('/:id', express.static('public'));
 
 app.get('/categories/:video_id', function (req, res) {
@@ -21,7 +21,7 @@ app.get('/categories/:video_id', function (req, res) {
 });
 
 app.get('/usersthumbnail/:user_id', function (req, res) {
-	pool.query('SELECT * FROM users WHERE _id = $1', [req.params.user_id])
+	pool.query('SELECT * FROM users WHERE id = $1', [req.params.user_id])
 		.then(data => {
 			res.json(data.rows[0]);
 		})
@@ -57,7 +57,7 @@ app.get('/details/:video_id', function (req, res) {
 
 /// need full CRUD for description and comments
 app.post('/comments/', function (req, res) {
-	const _id = faker.random.alphaNumeric(10).toUpperCase();
+	const id = faker.random.alphaNumeric(10).toUpperCase();
 	const {video_id, user_id, comment, date} = req.body;
 
 	pool.query(
@@ -104,7 +104,7 @@ app.get('/comments/', function (req, res) {
 app.put('/comments/:_id', function (req, res) {
 	const date = new Date();
 	pool.query(
-		'UPDATE comments SET video_id = $1 user_id = $2, comment = $3, date = $4 WHERE _id = $1',
+		'UPDATE comments SET video_id = $1 user_id = $2, comment = $3, date = $4 WHERE id = $1',
 		[req.body.video_id, req.body.user_id, req.body.comment, date])
 		.then(() => {
 			res.status(200).send('updated');
@@ -114,8 +114,8 @@ app.put('/comments/:_id', function (req, res) {
 		})
 })
 
-app.delete('/comments/:_id', function (req, res) {
-	pool.query('DELETE FROM comments WHERE _id = $1;', [req.params._id])
+app.delete('/comments/:id', function (req, res) {
+	pool.query('DELETE FROM comments WHERE id = $1;', [req.params.id])
 		.then(() => {
 			res.status(204).send('deleted');
 		})
