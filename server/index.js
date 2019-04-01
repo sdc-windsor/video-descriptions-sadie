@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use('/:id', express.static('public'));
 
 app.get('/categories/:video_id', function (req, res) {
