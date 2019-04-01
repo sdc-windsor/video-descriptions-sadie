@@ -34,7 +34,7 @@ client.query('select * from descriptions where video_id = 9928960;', (err, res) 
 //   }
 // })
 
-// client.query('select * from users where _id = 29998;', (err, res) => {
+// client.query('select * from users where id = 29998;', (err, res) => {
 //   if (err) {
 //     console.log(err)
 //   } else {
