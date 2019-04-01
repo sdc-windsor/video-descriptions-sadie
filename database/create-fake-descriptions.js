@@ -12,25 +12,21 @@ const getRandomLikes = () => {
 }
 
 const makeDescription = (id) => {
-  let _id = id;
   let video_id = id;
   let description = faker.lorem.sentences(3);
   let categories = '{' + getCategories().join(', ') + '}';
   let likes = getRandomLikes();
 
-  return [_id, video_id, description, categories, likes].join('\t')
+  return [id, video_id, description, categories, likes].join(',')
 }
 
-async function createFakeDescriptions() {
-  let start = 1;
-  let end = 1000001;
-  for (let i = 0; i < 10; i++) {
-    let ids = _.range(start, end);
-    await writeBatch(ids, `/batch_${i + 1}_descriptions.txt`, makeDescription)
-    start += 1000000;
-    end += 1000000;
-  }
+function createFakeDescriptions(end, i) {
+  const start = end - 1000000;
+  const ids = _.range(start, end);
+  writeBatch(ids, `/batch_${Number(i) + 1}_descriptions.csv`, makeDescription)
 }
 
-// create 10 million fake descriptions
-createFakeDescriptions();
+const batchNum = process.env.BATCH_NUM || 0;
+const ends = _.range(1000001, 11000001, 1000000)
+
+createFakeDescriptions(ends[batchNum], batchNum);
