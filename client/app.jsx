@@ -32,7 +32,6 @@ class App extends React.Component {
 
     getDetail(video_id) {
         axios.get(`${description_url}/details/${video_id}`).then((data) => {
-            console.log(data)
             this.setState({
                 details: data.data.description
             });
