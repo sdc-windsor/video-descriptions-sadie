@@ -3,10 +3,10 @@ const faker = require('faker');
 const _ = require('underscore');
 
 function makeUser(id) {
-  let _id = id;
+  let id = id;
   let username = faker.internet.userName();
   let user_thumbnail = faker.internet.avatar();
-  return [_id, username, user_thumbnail];
+  return [id, username, user_thumbnail];
 }
 
 function createFakeUsers() {
