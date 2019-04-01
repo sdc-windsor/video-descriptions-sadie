@@ -4,6 +4,7 @@
 
 * `POST /comments/` body include: video_id, user_id, and comment
 * `GET /comments/video_id`
+* `GET /comments?min=1&max=1000` return comments for 1000 videos at a time
 * `PUT /comments/_id` body include: video_id, user_id, and comment
 * `DELETE /comments/_id`
 
@@ -13,6 +14,7 @@ Category options: 'Animation', 'Comedy', 'Music', 'Education', 'Art & Design', '
 
 * `POST /descriptions` body include: video_id, description, and an array of categories
 * `GET /descriptions/video_id`
+* `GET /descriptions?min=1&max=1000` return descriptions for 1000 videos at a time
 * `PUT /descriptions` body include: video_id, description, and an array of categories
 * `DELETE /descriptions/video_id`
 
