@@ -8,7 +8,7 @@ import IoIosPaperplaneOutline from 'react-icons/lib/io/ios-paperplane-outline';
 import axios from 'axios';
 
 
-
+const description_url = 'http://localhost:3003';
 
 class IconTab extends React.Component {
     constructor(props) {
@@ -89,7 +89,7 @@ class IconTab extends React.Component {
     }
 
     getNumOfComments(video_id) {
-        axios.get(`http://localhost:3003/comments/${video_id}`).then((data) => {
+        axios.get(`${description_url}/comments/${video_id}`).then((data) => {
             this.setState({
                 numOfComments: data.data.length
             })
@@ -97,7 +97,7 @@ class IconTab extends React.Component {
     }
 
     getNumOfLikes(video_id) {
-        axios.get(`http://localhost:3003/categories/${video_id}`).then((data) => {
+        axios.get(`${description_url}/categories/${video_id}`).then((data) => {
             this.setState({
                 numOfLikes: data.data.likes
             })

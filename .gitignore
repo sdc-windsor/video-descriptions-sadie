@@ -30,3 +30,5 @@ dist/
 config.js
 
 *.zip
+
+*bundle.js

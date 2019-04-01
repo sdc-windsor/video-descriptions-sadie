@@ -4,6 +4,8 @@ import Comment from './Comment.jsx';
 import AddComment from './AddComment.jsx';
 import descriptions from '../../videoData_json';
 
+const description_url = 'http://localhost:3003';
+
 export default class CommentsList extends React.Component {
 	constructor(props) {
 		super(props)
@@ -21,7 +23,7 @@ export default class CommentsList extends React.Component {
 	}
 
 	getComments(video_id) {
-		axios.get(`http://localhost:3003/comments/${video_id}`)
+		axios.get(`${description_url}/comments/${video_id}`)
 			.then((data) => {
 				this.setState({
 					userInfo: data.data.map((ele) => { return ele })
@@ -40,7 +42,7 @@ export default class CommentsList extends React.Component {
 			}
 		}
 
-		axios.post(`http://localhost:3003/comments/`, data)
+		axios.post(`${description_url}/comments/`, data)
 			.then(() => {
 				this.setState({ commentToSend: 'Comment' });
 				this.getComments(data.video_id);

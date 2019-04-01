@@ -9,6 +9,9 @@ import DetailCom from './components/DetailCom.jsx';
 import CommentsList from './components/CommentsList.jsx';
 import { Date } from "core-js";
 
+const description_url = 'http://localhost:3003';
+const video_url = 'http://localhost:3001';
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -22,13 +25,13 @@ class App extends React.Component {
     }
 
     getAuthorImg(name, cb) {
-        axios.get(`http://localhost:3003/userid/${name}`).then((data) => {
-            axios.get(`http://localhost:3003/usersthumbnail/${data.data}`).then((data) => { cb(data) })
+        axios.get(`${description_url}/userid/${name}`).then((data) => {
+            axios.get(`${description_url}/usersthumbnail/${data.data}`).then((data) => { cb(data) })
         })
     }
 
     getDetail(video_id) {
-        axios.get(`http://localhost:3003/details/${video_id}`).then((data) => {
+        axios.get(`${description_url}/details/${video_id}`).then((data) => {
             console.log(data)
             this.setState({
                 details: data.data.description
@@ -37,7 +40,7 @@ class App extends React.Component {
     }
 
     getCategories(video_id) {
-        axios.get(`http://localhost:3003/categories/${video_id}`).then((data) => {
+        axios.get(`${description_url}/categories/${video_id}`).then((data) => {
             this.setState({
                 categories: data.data.categories
             });
@@ -47,7 +50,7 @@ class App extends React.Component {
     componentDidMount() {
         let id = window.location.pathname; //  '/5/'
         id = id.split('/');
-        axios.get(`http://localhost:3001/videos/${Number(id[1])}`).then((data) => {
+        axios.get(`${video_url}/videos/${Number(id[1])}`).then((data) => {
             this.setState({
                 data: data.data[0]
             }),

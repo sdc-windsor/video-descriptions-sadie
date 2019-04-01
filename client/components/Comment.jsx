@@ -3,6 +3,8 @@ import axios from 'axios';
 import {userThumbNail} from '../styles';
 import {distanceInWordsStrict} from 'date-fns';
 
+const description_url = 'http://localhost:3003';
+
 class Comment extends React.Component{
     constructor(props) {
         super(props);
@@ -13,7 +15,7 @@ class Comment extends React.Component{
     }
 
     getUserInfo(user_id) {
-        axios.get(`http://localhost:3003/usersthumbnail/${user_id}`).then((data)=>{
+        axios.get(`${description_url}/usersthumbnail/${user_id}`).then((data)=>{
             this.setState({
                 info: data.data
             })
