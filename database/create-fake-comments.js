@@ -7,14 +7,13 @@ const getRandomCommentQuantity = () => {
   return (Math.random() > .95) ? getRandomInt(20) : getRandomInt(5);
 }
 
-const makeComment = (id) => {
-  let _id = faker.random.alphaNumeric(10).toUpperCase();
-  let video_id = id;
+const makeComment = (video_id) => {
+  let id = faker.random.alphaNumeric(10).toUpperCase();
   let user_id = getRandomInt(30000);
   let comment = faker.lorem.sentence();
   let date = faker.date.between('2016-01-01', '2019-03-01').toISOString().substr(0, 19).replace('T', ' ');
 
-  return [_id, video_id, user_id, comment, date].join(', ');
+  return [id, video_id, user_id, comment, date].join(', ');
 };
 
 async function writeBatchComments(ids, fileName) {
@@ -35,12 +34,12 @@ async function writeBatchComments(ids, fileName) {
   });
 }
 
-function createFakeComments(i, start, end) {
+async function createFakeComments(i, start, end) {
   let ids = _.range(start, end);
-  writeBatchComments(ids, `/batch_${i + 1}_comments.txt`);
+  await writeBatchComments(ids, `/batch_${i + 1}_comments.csv`);
 };
 
-async function blah (n, s) {
+async function createFakeCommentsBatch(n, s) {
   let start = s;
   let end = start + 250000;
   for (let i = n; i < n + 5; i++) {
@@ -50,19 +49,16 @@ async function blah (n, s) {
   }
 }
 
-// console.log(_.range(1, 10000000, 1250000))
+const batchNum = process.env.BATCH_NUM || 0;
+const runs = [
+  [0, 1], [5, 1250001],
+  [10, 2500001], [15, 3750001],
+  [20, 5000001], [25, 6250001],
+  [30, 7500001], [35, 8750001]
+];
 
-blah(0, 1);
-// blah(5, 1250001)
-// blah(10, 2500001)
-// blah(15, 3750001)
-// blah(20, 5000001)
-// blah(25, 6250001)
-// async function bleep() {
-//   await blah(30, 7500001)
-// }
-// bleep();
-// async function bleep2() {
-//   await blah(35, 8750001)
-// }
-// bleep2();
+const n = runs[batchNum][0];
+const s = runs[batchNum][1];
+
+createFakeCommentsBatch(n, s);
+
