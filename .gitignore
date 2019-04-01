@@ -24,3 +24,11 @@ coverage
 build/
 dist/
 
+# fake data
+*batch*
+
+config.js
+
+*.zip
+
+*bundle.js

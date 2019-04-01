@@ -8,7 +8,7 @@ import IoIosPaperplaneOutline from 'react-icons/lib/io/ios-paperplane-outline';
 import axios from 'axios';
 
 
-
+const description_url = 'http://localhost:3003';
 
 class IconTab extends React.Component {
     constructor(props) {
@@ -23,7 +23,6 @@ class IconTab extends React.Component {
 
     shortenNum(num) {
         const stringifiedNum = typeof num === 'string' ? num : JSON.stringify(num);
-        console.log(stringifiedNum)
         if (stringifiedNum.length >= 7 && stringifiedNum.length < 10) {
             const milDigit = stringifiedNum.slice(0, stringifiedNum.length - 4);
             return this.convertMilToString(stringifiedNum, milDigit);
@@ -55,7 +54,6 @@ class IconTab extends React.Component {
 
     convertBilToString(stringifiedNum, bilDigit) {
         if (Number(bilDigit[bilDigit.length - 1]) >= 5) {
-            console.log('last digit >5')
             let newNum = Number(bilDigit.slice(0, bilDigit.length - 1)) + 1;
             let newArr = newNum.toString().split('');
             newArr.splice(newArr.length - 1, 0, ".")
@@ -91,7 +89,7 @@ class IconTab extends React.Component {
     }
 
     getNumOfComments(video_id) {
-        axios.get(`http://localhost:8081/comments/${video_id}`).then((data) => {
+        axios.get(`${description_url}/comments/${video_id}`).then((data) => {
             this.setState({
                 numOfComments: data.data.length
             })
@@ -99,7 +97,7 @@ class IconTab extends React.Component {
     }
 
     getNumOfLikes(video_id) {
-        axios.get(`http://localhost:8081/categories/${video_id}`).then((data) => {
+        axios.get(`${description_url}/categories/${video_id}`).then((data) => {
             this.setState({
                 numOfLikes: data.data.likes
             })
@@ -111,7 +109,6 @@ class IconTab extends React.Component {
         id = id.split('/');
         this.getNumOfComments(Number(id[1]));
         this.getNumOfLikes(Number(id[1]));
-        console.log(this.state.numOfLikes, this.state.numOfComments)
     }
 
     render() {

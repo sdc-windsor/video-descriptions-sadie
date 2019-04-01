@@ -3,6 +3,8 @@ import axios from 'axios';
 import { userThumbNail } from '../styles';
 import { Button } from 'reactstrap';
 
+const description_url = 'http://localhost:3003';
+
 class AddComment extends React.Component {
     constructor(props) {
         super(props);
@@ -13,7 +15,7 @@ class AddComment extends React.Component {
     }
 
     getUserInfo(user_id) {
-        axios.get(`http://localhost:8081/usersthumbnail/${user_id}`).then((data) => {
+        axios.get(`${description_url}/usersthumbnail/${user_id}`).then((data) => {
             this.setState({
                 info: data.data
             })
@@ -21,7 +23,7 @@ class AddComment extends React.Component {
     }
 
     componentDidMount() {
-        this.getUserInfo('5c8b1feba0a0f7484fb970b2');
+        this.getUserInfo('3');
     }
 
     render() {
