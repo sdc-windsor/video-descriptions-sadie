@@ -4,13 +4,14 @@ const pool = require('../database/index.js');
 const faker = require('faker');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { validateComment } = require('./validation.js');
 
 app.use(bodyParser.json());
 
 app.use(cors());
 
 app.use(express.static('public'));
-app.use('/:id', express.static('public'));
+app.use('/:id', express.static('public')); // ask leslie about GET issue
 
 app.get('/categories/:video_id', function (req, res) {
 	pool.query('SELECT * FROM descriptions WHERE video_id = $1', [req.params.video_id])
@@ -58,17 +59,23 @@ app.get('/details/:video_id', function (req, res) {
 /// need full CRUD for description and comments
 app.post('/comments/', function (req, res) {
 	const id = faker.random.alphaNumeric(10).toUpperCase();
-	const {video_id, user_id, comment, date} = req.body;
+	const { video_id, user_id, comment, date } = req.body;
 
-	pool.query(
-		'INSERT INTO comments (_id, video_id, user_id, comment, date) VALUES ($1, $2, $3, $4, $5)',
-		[_id, video_id, user_id, comment, date])
-		.then(() => {
-			res.status(201).send('success');
-		})
-		.catch(e => {
-			res.status(400).send(e);
-		})
+	if (validateComment(video_id, user_id, comment)) {
+		pool.query(
+			'INSERT INTO comments (id, video_id, user_id, comment, date) VALUES ($1, $2, $3, $4, $5)',
+			[id, video_id, user_id, comment, date])
+			.then(() => {
+				res.status(201).send('success');
+			})
+			.catch(e => {
+				res.status(400).send(e);
+			})
+	} else {
+		res.status(400).send('improper post request body');
+	}
+
+
 })
 
 app.get('/comments/:video_id', function (req, res) {
@@ -101,17 +108,23 @@ app.get('/comments/', function (req, res) {
 	}
 });
 
-app.put('/comments/:_id', function (req, res) {
+app.put('/comments/:id', function (req, res) {
 	const date = new Date();
-	pool.query(
-		'UPDATE comments SET video_id = $1 user_id = $2, comment = $3, date = $4 WHERE id = $1',
-		[req.body.video_id, req.body.user_id, req.body.comment, date])
-		.then(() => {
-			res.status(200).send('updated');
-		})
-		.catch(e => {
-			res.status(404).send(e);
-		})
+	const {video_id, user_id, comment} = req.body
+	if (validateComment(video_id, user_id, comment)) {
+		pool.query(
+			'UPDATE comments SET video_id = $1 user_id = $2, comment = $3, date = $4 WHERE id = $1',
+			[video_id, user_id, comment, date])
+			.then(() => {
+				res.status(200).send('updated');
+			})
+			.catch(e => {
+				res.status(404).send(e);
+			})
+	} else {
+		res.status(404).send('improper update request body');
+	}
+
 })
 
 app.delete('/comments/:id', function (req, res) {
@@ -128,15 +141,20 @@ app.post('/descriptions/', function (req, res) {
 	const description = req.body.description;
 	const categories = "ARRAY" + JSON.stringify(req.body.categories);
 	const likes = 0;
-	pool.query(
-		'INSERT INTO descriptions (video_id, description, categories, likes) VALUES ($1, $2, $3, $4)',
-		[video_id, description, categories, likes])
-		.then(() => {
-			res.status(201).send('success');
-		})
-		.catch(e => {
-			res.status(400).send(e);
-		})
+	if (validateDescription(video_id, description, categories)) {
+		pool.query(
+			'INSERT INTO descriptions (video_id, description, categories, likes) VALUES ($1, $2, $3, $4)',
+			[video_id, description, categories, likes])
+			.then(() => {
+				res.status(201).send('success');
+			})
+			.catch(e => {
+				res.status(400).send(e);
+			})
+	} else {
+		res.status(400).send('improper description body');
+	}
+
 })
 
 app.get('/descriptions', function (req, res) {
@@ -174,26 +192,32 @@ app.put('/descriptions/:video_id', function (req, res) {
 	const description = req.body.description;
 	const categories = "ARRAY" + JSON.stringify(req.body.categories);
 	const likes = req.body.likes;
-	pool.query(
-		'UPDATE descriptions SET description = $2, categories = $3, likes = $4 WHERE video_id = $1',
-		[[video_id, description, categories, likes]])
-		.then(() => {
-			res.status(200).send('updated');
-		})
-		.catch(e => {
-			res.status(404).send(e);
-		})
+
+	if (validateDescription(video_id, description, categories) & !isNaN(likes)) {
+		pool.query(
+			'UPDATE descriptions SET description = $2, categories = $3, likes = $4 WHERE video_id = $1',
+			[[video_id, description, categories, likes]])
+			.then(() => {
+				res.status(200).send('updated');
+			})
+			.catch(e => {
+				res.status(404).send(e);
+			})
+	} else {
+		res.status(404).send('improper update description body');
+	}
+
 })
 
 
 app.delete('/descriptions/:video_id', function (req, res) {
 	pool.query('DELETE FROM descriptions WHERE video_id = $1;', [req.params.video_id])
-	.then(() => {
-		res.status(204).send('deleted');
-	})
-	.catch(e => {
-		res.status(400).send(e);
-	})
+		.then(() => {
+			res.status(204).send('deleted');
+		})
+		.catch(e => {
+			res.status(400).send(e);
+		})
 })
 
 
