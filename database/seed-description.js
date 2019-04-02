@@ -6,6 +6,6 @@ const helpers = require('./seeding-helpers');
   try {
     await helpers.uploadAll(client, 'descriptions', 'descriptions.txt', 10)
   } finally {
-    // client.release()
+    // client.release() // ask leslie about client closing
   }
 })().catch(e => console.log(e))
