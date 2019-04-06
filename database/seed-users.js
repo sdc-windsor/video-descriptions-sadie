@@ -7,7 +7,7 @@ const helpers = require('./seeding-helpers');
   try {
     await helpers.uploadBatch(client, 'users', path.join(__dirname, 'batch_1_users.txt'));
   } finally {
-    client.release()
+    // client.release()
   }
 })().catch(e => console.log(e.stack))
 
