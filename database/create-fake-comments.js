@@ -2,6 +2,7 @@ const faker = require('faker');
 const fs = require('fs');
 const _ = require('underscore');
 const { getRandomInt } = require('./fake-data-helpers.js');
+const path = require('path');
 
 const getRandomCommentQuantity = () => {
   return (Math.random() > .95) ? getRandomInt(20) : getRandomInt(5);
@@ -16,49 +17,41 @@ const makeComment = (video_id) => {
   return [id, video_id, user_id, comment, date].join(', ');
 };
 
-async function writeBatchComments(ids, fileName) {
-  let dataString = ids.map((id) => {
-    let numOfComments = getRandomCommentQuantity();
-    var comments = [];
-    while (numOfComments > 0) {
-      comments.push(makeComment(id));
-      numOfComments--;
-    }
-    return comments.join('\r');
-  }).join('\r')
-
-
-  await fs.writeFile(__dirname + fileName, dataString, (err) => {
-    if (err) throw err;
-    console.log('The file has been saved!');
-  });
+const makeVideoComments = (video_id) => {
+  let numOfComments = getRandomCommentQuantity();
+  var comments = [];
+  while (numOfComments > 0) {
+    comments.push(makeComment(video_id));
+    numOfComments--;
+  }
+  return comments.join('\r');
 }
 
-async function createFakeComments(i, start, end) {
-  let ids = _.range(start, end);
-  await writeBatchComments(ids, `/batch_${i + 1}_comments.csv`);
-};
+var fileStream = fs.createWriteStream(path.join(__dirname, 'comments.csv'))
 
-async function createFakeCommentsBatch(n, s) {
-  let start = s;
-  let end = start + 250000;
-  for (let i = n; i < n + 5; i++) {
-    await createFakeComments(i, start, end);
-    start += 250000;
-    end += 250000;
+function write10mil(writer, encoding, callback) {
+  let i = 10000000;
+  write();
+  function write() {
+    let ok = true;
+    do {
+      var data = makeVideoComments(i);
+      i--;
+      if (i === 0) {
+        // last time!
+        writer.write(data, encoding, callback);
+      } else {
+        // See if we should continue, or wait.
+        // Don't pass the callback, because we're not done yet.
+        ok = writer.write(data, encoding);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      // had to stop early!
+      // write some more once it drains
+      writer.once('drain', write);
+    }
   }
 }
 
-const batchNum = process.env.BATCH_NUM || 0;
-const runs = [
-  [0, 1], [5, 1250001],
-  [10, 2500001], [15, 3750001],
-  [20, 5000001], [25, 6250001],
-  [30, 7500001], [35, 8750001]
-];
-
-const n = runs[batchNum][0];
-const s = runs[batchNum][1];
-
-createFakeCommentsBatch(n, s);
-
+write10mil(fileStream, 'utf8', () => {fileStream.end()})
