@@ -3,8 +3,10 @@ const config = require('./../config.js');
 
 const pool = new Pool({
   user: config.user,
-  database: 'vimeo',
   password: config.password,
+  host: config.host,
+  port: config.port,
+  database: 'vimeo',
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
