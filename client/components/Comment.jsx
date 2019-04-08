@@ -3,7 +3,7 @@ import axios from 'axios';
 import {userThumbNail} from '../styles';
 import {distanceInWordsStrict} from 'date-fns';
 
-const description_url = 'http://localhost:3003';
+const description_url = 'http://ec2-34-211-59-0.us-west-2.compute.amazonaws.com:3003';
 
 class Comment extends React.Component{
     constructor(props) {
