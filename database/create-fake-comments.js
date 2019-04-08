@@ -24,13 +24,13 @@ const makeVideoComments = (video_id) => {
     comments.push(makeComment(video_id));
     numOfComments--;
   }
-  return comments.join('\r');
+  return comments.join('\n').concat('\n');
 }
 
 var fileStream = fs.createWriteStream(path.join(__dirname, 'comments.csv'))
 
 function write10mil(writer, encoding, callback) {
-  let i = 10000000;
+  let i = 10;
   write();
   function write() {
     let ok = true;
