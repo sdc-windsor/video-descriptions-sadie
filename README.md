@@ -94,18 +94,7 @@ BATCH_NUM=9 node database/create-fake-descriptions.js
 To create fake comments for 10 million videos:
 
 1. open a terminal and navigate to project directory
-2. run the following commands
-
-```
-BATCH_NUM=0 node database/create-fake-comments.js
-BATCH_NUM=1 node database/create-fake-comments.js
-BATCH_NUM=2 node database/create-fake-comments.js
-BATCH_NUM=3 node database/create-fake-comments.js
-BATCH_NUM=4 node database/create-fake-comments.js
-BATCH_NUM=5 node database/create-fake-comments.js
-BATCH_NUM=6 node database/create-fake-comments.js
-BATCH_NUM=7 node database/create-fake-comments.js
-```
+2. run `node database/create-fake-comments.js`
 3. run `node database/seed-comments.js`
 
 ### Users

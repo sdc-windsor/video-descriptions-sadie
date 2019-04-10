@@ -31,5 +31,5 @@ config.js
 
 *.zip
 
-*bundle.js
+*bundle.js*
 *comments.csv
