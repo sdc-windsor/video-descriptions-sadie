@@ -3,7 +3,8 @@ import axios from 'axios';
 import { userThumbNail } from '../styles';
 import { Button } from 'reactstrap';
 
-const description_url = 'http://ec2-34-211-59-0.us-west-2.compute.amazonaws.com:3003';
+// const description_url = 'http://ec2-34-211-59-0.us-west-2.compute.amazonaws.com:3003';
+const description_url = 'http://localhost:3003';
 
 class AddComment extends React.Component {
     constructor(props) {
