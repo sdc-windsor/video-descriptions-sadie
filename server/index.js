@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-const pool = require('../database/index.js');
-const faker = require('faker');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import pool from '../database/index.js';
+import faker from 'faker';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 app.use(bodyParser.json());
 

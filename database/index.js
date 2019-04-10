@@ -1,5 +1,5 @@
-const { Pool } = require('pg');
-const config = require('./../config.js');
+import Pool from 'pg';
+import config from './../config.js';
 
 const pool = new Pool({
   user: config.user,
