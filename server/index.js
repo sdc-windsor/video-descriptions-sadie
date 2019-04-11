@@ -4,13 +4,17 @@ const pool = require('../database/index.js');
 const faker = require('faker');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+// const compression = require('compression');
+// const expressStaticGzip = require('express-static-gzip');
 
 app.use(bodyParser.json());
-
+// app.use(compression());
 app.use(cors());
 
 app.use(express.static('public'));
 app.use('/:id', express.static('public'));
+// app.use('/', expressStaticGzip('public'));
+
 
 app.get('/categories/:video_id', function (req, res) {
 	pool.query('SELECT * FROM descriptions WHERE video_id = $1', [req.params.video_id])
@@ -196,6 +200,7 @@ app.delete('/descriptions/:video_id', function (req, res) {
 	})
 })
 
+// app.use('/:id', expressStaticGzip('public'));
 
 module.exports = app;
 

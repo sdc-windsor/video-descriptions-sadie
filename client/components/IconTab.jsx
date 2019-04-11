@@ -9,6 +9,7 @@ import axios from 'axios';
 
 
 const description_url = 'http://ec2-34-211-59-0.us-west-2.compute.amazonaws.com:3003';
+// const description_url = 'http://localhost:3003';
 
 class IconTab extends React.Component {
     constructor(props) {
