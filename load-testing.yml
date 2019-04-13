@@ -1,0 +1,38 @@
+config:
+  payload:
+      path: "testing_ids.csv"
+      fields:
+        - "video_id"
+        - "id"
+      order: sequence
+  target: 'http://localhost:3003'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+scenarios:
+  - name: "Get description for a video"
+    flow:
+      - get:
+          url: "/descriptions/{{ video_id }}"
+  - name: "Get comments for a video"
+    flow:
+      - get:
+          url: "/comments/{{ video_id }}"
+  - name: "Get 1000 video descriptions"
+    flow:
+      - get:
+          url: "/descriptions?min=9999000&max=9999100"
+  - name: "Get comments for 1000 videos"
+    flow:
+      - get:
+          url: "/comments?min=9999000&max=9999100"
+  - name: "Post comment to video"
+    flow:
+      - post:
+          url: "/comments"
+          json:
+            id: "{{ id }}"
+            video_id:  "{{ video_id }}"
+            user_id: 1000
+            comment: "What up?"
+            date: "2019-04-13T00:01:04.000Z"

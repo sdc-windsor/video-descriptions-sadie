@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use(express.static('public'));
-app.use('/:id', express.static('public'));
 // app.use('/', expressStaticGzip('public'));
 
 
@@ -65,8 +64,8 @@ app.post('/comments/', function (req, res) {
 	const {video_id, user_id, comment, date} = req.body;
 
 	pool.query(
-		'INSERT INTO comments (_id, video_id, user_id, comment, date) VALUES ($1, $2, $3, $4, $5)',
-		[_id, video_id, user_id, comment, date])
+		'INSERT INTO comments (id, video_id, user_id, comment, date) VALUES ($1, $2, $3, $4, $5)',
+		[id, video_id, user_id, comment, date])
 		.then(() => {
 			res.status(201).send('success');
 		})
@@ -201,6 +200,7 @@ app.delete('/descriptions/:video_id', function (req, res) {
 })
 
 // app.use('/:id', expressStaticGzip('public'));
+app.use('/:id', express.static('public'));
 
 module.exports = app;
 
