@@ -11,7 +11,6 @@ import { Date } from "core-js";
 
 const description_url = 'http://ec2-34-211-59-0.us-west-2.compute.amazonaws.com:3003';
 // const description_url = 'http://localhost:3003';
-const video_url = 'http://localhost:3001';
 
 class App extends React.Component {
 	constructor(props) {
@@ -25,10 +24,9 @@ class App extends React.Component {
 		this.getAuthorImg = this.getAuthorImg.bind(this);
 	}
 
-	getAuthorImg(name, cb) {
-		axios.get(`${description_url}/userid/${name}`).then((data) => {
-			axios.get(`${description_url}/usersthumbnail/${data.data}`).then((data) => { cb(data) })
-		})
+	getAuthorImg(cb) {
+		let user_id = Math.floor(Math.random() * (30000 - 1) + 1)
+		axios.get(`${description_url}/usersthumbnail/${user_id}`).then((data) => { cb(data) })
 	}
 
 	getDetail(video_id) {
@@ -50,15 +48,10 @@ class App extends React.Component {
 	componentDidMount() {
 		let id = window.location.pathname; //  '/5/'
 		id = id.split('/');
-		axios.get(`${video_url}/videos/${Number(id[1])}`).then((data) => {
+		this.getAuthorImg((data) => {
 			this.setState({
-				data: data.data[0]
-			}),
-				this.getAuthorImg(data.data[0].author, (data) => {
-					this.setState({
-						authorImg: data.data.user_thumbnail
-					})
-				});
+				authorImg: data.data.user_thumbnail
+			})
 		})
 		this.getDetail(Number(id[1]));
 		this.getCategories(Number(id[1]));
