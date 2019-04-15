@@ -32,6 +32,7 @@ config.js
 *.zip
 
 *bundle.js*
-*comments.csv
-*testing_ids.csv
+*.csv
 newrelic.js
+
+*proxy*
