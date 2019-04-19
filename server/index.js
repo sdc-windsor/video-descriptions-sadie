@@ -5,15 +5,13 @@ const pool = require('../database/index.js');
 const faker = require('faker');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const compression = require('compression');
-// const expressStaticGzip = require('express-static-gzip');
+const compression = require('compression');
 
+app.use(compression());
 app.use(bodyParser.json());
-// app.use(compression());
 app.use(cors());
 
 app.use(express.static('public'));
-// app.use('/', expressStaticGzip('public'));
 
 
 app.get('/categories/:video_id', function (req, res) {
@@ -200,7 +198,6 @@ app.delete('/descriptions/:video_id', function (req, res) {
 	})
 })
 
-// app.use('/:id', expressStaticGzip('public'));
 app.use('/:id', express.static('public'));
 
 module.exports = app;
