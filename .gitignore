@@ -36,3 +36,4 @@ config.js
 newrelic.js
 
 *proxy*
+*.json
