@@ -4,8 +4,7 @@ import Comment from './Comment.jsx';
 import AddComment from './AddComment.jsx';
 import descriptions from '../../videoData_json';
 
-const description_url = 'http://ec2-34-211-59-0.us-west-2.compute.amazonaws.com:3003';
-// const description_url = 'http://localhost:3003';
+const description_url = 'ec2-54-187-177-192.us-west-2.compute.amazonaws.com';
 
 export default class CommentsList extends React.Component {
 	constructor(props) {
