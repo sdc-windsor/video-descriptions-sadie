@@ -8,7 +8,7 @@ import IoIosPaperplaneOutline from 'react-icons/lib/io/ios-paperplane-outline';
 import axios from 'axios';
 
 
-const description_url = 'ec2-54-187-177-192.us-west-2.compute.amazonaws.com';
+const description_url = 'http://ec2-54-187-177-192.us-west-2.compute.amazonaws.com';
 
 class IconTab extends React.Component {
     constructor(props) {

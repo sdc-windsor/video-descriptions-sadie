@@ -13,7 +13,6 @@ app.use(cors());
 
 app.use(express.static('public'));
 
-
 app.get('/categories/:video_id', function (req, res) {
 	pool.query('SELECT * FROM descriptions WHERE video_id = $1', [req.params.video_id])
 		.then(data => {

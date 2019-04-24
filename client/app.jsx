@@ -8,8 +8,9 @@ import LineDivider from './components/LineDivider.jsx';
 import DetailCom from './components/DetailCom.jsx';
 import CommentsList from './components/CommentsList.jsx';
 import { Date } from "core-js";
+import http from 'http'
 
-const description_url = 'ec2-54-187-177-192.us-west-2.compute.amazonaws.com';
+const description_url = 'http://ec2-54-187-177-192.us-west-2.compute.amazonaws.com';
 
 class App extends React.Component {
 	constructor(props) {
@@ -25,7 +26,11 @@ class App extends React.Component {
 
 	getAuthorImg(cb) {
 		let user_id = Math.floor(Math.random() * (30000 - 1) + 1)
-		axios.get(`${description_url}/usersthumbnail/${user_id}`).then((data) => { cb(data) })
+		axios.get(`${description_url}/usersthumbnail/${user_id}`)
+		.then((data) => {
+			cb(data)
+		})
+
 	}
 
 	getDetail(video_id) {
