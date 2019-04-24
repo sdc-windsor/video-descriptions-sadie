@@ -1,4 +1,5 @@
 const path = require('path');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
     entry: ['@babel/polyfill', __dirname + '/client/index.jsx'],
@@ -7,6 +8,12 @@ module.exports = {
       path: path.resolve(__dirname, 'public')
     },
     mode: 'production',
+    plugins: [
+      new CompressionPlugin({
+        algorithm: 'gzip',
+        test: /\.(js|css|html|svg)$/
+      })
+    ],
     module: {
       rules: [
         {
