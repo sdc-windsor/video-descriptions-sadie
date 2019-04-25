@@ -12,7 +12,9 @@
     "start": "node ./server/server.js",
     "build": "webpack",
     "test": "mocha",
-    "seed": "node ./database/seeding.js"
+    "seed": "node ./database/seeding.js",
+    "react-dev": "webpack -p --watch",
+    "start-dev": "nodemon ./server/server.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
