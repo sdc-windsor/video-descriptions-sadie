@@ -8,7 +8,6 @@ import LineDivider from './components/LineDivider.jsx';
 import DetailCom from './components/DetailCom.jsx';
 import CommentsList from './components/CommentsList.jsx';
 import { Date } from "core-js";
-import http from 'http'
 
 const description_url = 'http://ec2-54-187-177-192.us-west-2.compute.amazonaws.com';
 
